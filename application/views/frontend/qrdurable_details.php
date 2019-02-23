@@ -37,7 +37,6 @@
 			    		<p><b>ชื่อ :</b> <?php echo $r->durable_name; ?></p>
 			    		<p><b>รหัสครุภัณฑ์ :</b> <?php echo $r->durable_code; ?></p>
 			    		<p><b>ประเภทของครุภัณฑ์ :</b> <?php echo $r->cat_name; ?></p>
-			    		<p><b>สถานะครุภัณฑ์ :</b> <?php echo $r->durable_status_name; ?></p>
 			    		<p><b>ตำแหน่ง :</b> <?php echo $r->room_name; ?></p>
 			    		<p><b>รายละเอียดเพิ่มเติม :</b> <?php echo $r->description; ?></p>
 			    	</div>
@@ -50,7 +49,7 @@
 						<a href="<?php echo site_url('sign/').$r->durable_id; ?>" class="btn btn-success">ลงชื่อใช้งาน</a>
 					</div>
 					<div class="col-md-3 col-xs-6">
-						<a href="<?php echo site_url('report/').$r->durable_id; ?>" class="btn btn-danger">แจ้งปัญหา</a>
+						<a href="<?php echo site_url('problem/').$r->durable_id; ?>" class="btn btn-danger">แจ้งปัญหา</a>
 					</div>
 					<div class="col-md-3"></div>
  <?php } ?>

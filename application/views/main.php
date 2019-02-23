@@ -143,7 +143,7 @@
                                     </a>
                                     <ul class="sidebar-nav">
                                         <li <?php if($menu == 'setting_name'){ echo "class=\"active\""; } ?>>
-                                            <a href="<?= site_url('setting_name'); ?>"> ตั้งค่าชื่อระบบ </a>
+                                            <a href="<?= site_url('setting_name'); ?>"> ตั้งค่า ชื่อระบบ </a>
                                         </li>
                                     </ul>
                                     <ul class="sidebar-nav">

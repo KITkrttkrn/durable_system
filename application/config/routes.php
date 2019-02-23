@@ -57,7 +57,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['success'] = "durable_detail/success";
 $route['qrdurable_detail/(:num)'] = "durable_detail/index/$1";
 $route['sign/(:num)'] = "durable_detail/sign/$1";
-$route['report/(:num)'] = "durable_detail/report_view/$1";
+$route['problem/(:num)'] = "durable_detail/report_view/$1";
 
 //Auth Controller
 $route['logout'] = 'auth/logout';
@@ -106,6 +106,7 @@ $route['process_return'] = 'borrow/process_return';
 //Pdf Controller
 $route['report/(:num)'] = 'pdf/report/$1';
 $route['qrcode/(:num)'] = 'pdf/qrcode/$1';
+$route['qrcode_by_room'] = 'pdf/qrcode_by_room';
 
 //Admin Controller
 $route['setting_name'] = 'admin/setting_name';

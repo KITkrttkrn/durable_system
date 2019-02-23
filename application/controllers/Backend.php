@@ -259,7 +259,7 @@ class Backend extends CI_Controller {
 	{
 		if($_FILES['com_img']){
 			$config['upload_path']          = '.\resources\durable';
-			$config['allowed_types']        = 'jpg|jpeg';
+			$config['allowed_types']        = 'jpg|jpeg|png|PNG|JPG|JPEG';
 			$config['max_size']             = 6000;
 			$config['encrypt_name']         = TRUE;
 	
