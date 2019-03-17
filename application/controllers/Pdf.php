@@ -76,22 +76,14 @@ class pdf extends CI_Controller {
 				<br>
 				<div class=\"row\">
 				<table border=\"1\">
-				<tr>
-					<td align=\"center\">
+				<tr>";
+				$content .= "<td align=\"center\">
 					<br>
-					<font style=\"font-family: garuda; font-size: 25px\"> ".$query[0]->durable_name." </font>
-					</td>
-				</tr>
-				<tr>
-					<td align=\"center\">
+					<p><font style=\"font-family: garuda; font-size: 25px\"> ".$query[0]->durable_name." </font></p>
 					<p style=\"font-family: garuda\">".$query[0]->durable_code."</p>
-					</td>
-				</tr>
-				<tr>
-				<td align=\"center\">
-				<img width=\"30%\" src=".base_url('uploads/qr_image/'.$img_url)." alt=\"QRCode Image\">
-				</td>
-			</tr>
+					<br><img width=\"30%\" src=".base_url('uploads/qr_image/'.$qr_image)." alt=\"QRCode Image\">
+					</td>";	
+		$content .="</tr>
 			</table>
 				</div>
 			</div>
@@ -113,8 +105,8 @@ class pdf extends CI_Controller {
 	function qrcode_by_room() 
     {
 		authen_sys();
-		if(isset($_POST['room']) AND $_POST['room'] != ""){
-
+		if(isset($_GET['room']) AND $_GET['room'] != ""){
+			$id = $_GET['room'];
 			$query = $this->report_model->get_durable_detail_by_room($id);
 
 		$defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();

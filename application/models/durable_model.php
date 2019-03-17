@@ -194,6 +194,13 @@ class durable_model extends CI_Model {
 			}
 		}
 
+		public function getCampus()
+		{
+			$q = $this->db->select('*');
+			$q = $this->db->get('campus');
+			return $q->result();
+		}
+
 		
 
 }

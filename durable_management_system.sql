@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2019 at 04:00 AM
+-- Generation Time: Mar 17, 2019 at 03:46 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -30,6 +30,7 @@ USE `durable_management_system`;
 -- Table structure for table `borrows`
 --
 
+DROP TABLE IF EXISTS `borrows`;
 CREATE TABLE IF NOT EXISTS `borrows` (
   `borrow_id` int(11) NOT NULL AUTO_INCREMENT,
   `durable_id` int(11) NOT NULL,
@@ -61,6 +62,7 @@ INSERT INTO `borrows` (`borrow_id`, `durable_id`, `borrow_date`, `due_date`, `re
 --
 -- Triggers `borrows`
 --
+DROP TRIGGER IF EXISTS `add_date_borrow`;
 DELIMITER $$
 CREATE TRIGGER `add_date_borrow` BEFORE INSERT ON `borrows` FOR EACH ROW BEGIN
 	IF (NEW.borrow_date IS NULL) THEN
@@ -69,6 +71,7 @@ CREATE TRIGGER `add_date_borrow` BEFORE INSERT ON `borrows` FOR EACH ROW BEGIN
  END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `update_borrow`;
 DELIMITER $$
 CREATE TRIGGER `update_borrow` BEFORE UPDATE ON `borrows` FOR EACH ROW BEGIN
 	IF (NEW.return_date IS NULL) THEN
@@ -84,6 +87,7 @@ DELIMITER ;
 -- Table structure for table `borrow_detail`
 --
 
+DROP TABLE IF EXISTS `borrow_detail`;
 CREATE TABLE IF NOT EXISTS `borrow_detail` (
   `borrow_detail_id` int(11) NOT NULL,
   `borrow_id` int(11) NOT NULL,
@@ -97,6 +101,7 @@ CREATE TABLE IF NOT EXISTS `borrow_detail` (
 -- Table structure for table `borrow_status`
 --
 
+DROP TABLE IF EXISTS `borrow_status`;
 CREATE TABLE IF NOT EXISTS `borrow_status` (
   `borrow_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `borrow_status_name` varchar(255) NOT NULL,
@@ -117,6 +122,7 @@ INSERT INTO `borrow_status` (`borrow_status_id`, `borrow_status_name`) VALUES
 -- Table structure for table `buildings`
 --
 
+DROP TABLE IF EXISTS `buildings`;
 CREATE TABLE IF NOT EXISTS `buildings` (
   `building_id` int(11) NOT NULL AUTO_INCREMENT,
   `building_name` varchar(255) NOT NULL,
@@ -138,6 +144,7 @@ INSERT INTO `buildings` (`building_id`, `building_name`, `campus_id`) VALUES
 -- Table structure for table `campus`
 --
 
+DROP TABLE IF EXISTS `campus`;
 CREATE TABLE IF NOT EXISTS `campus` (
   `campus_id` int(11) NOT NULL AUTO_INCREMENT,
   `campus_name` varchar(255) NOT NULL,
@@ -157,6 +164,7 @@ INSERT INTO `campus` (`campus_id`, `campus_name`) VALUES
 -- Table structure for table `category`
 --
 
+DROP TABLE IF EXISTS `category`;
 CREATE TABLE IF NOT EXISTS `category` (
   `cat_id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(255) NOT NULL,
@@ -184,9 +192,33 @@ INSERT INTO `category` (`cat_id`, `cat_name`, `durable_age`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `course`
+--
+
+DROP TABLE IF EXISTS `course`;
+CREATE TABLE IF NOT EXISTS `course` (
+  `course_id` int(11) NOT NULL AUTO_INCREMENT,
+  `course_name` varchar(255) NOT NULL,
+  `major_id` int(11) NOT NULL,
+  PRIMARY KEY (`course_id`),
+  KEY `major_id` (`major_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `course`
+--
+
+INSERT INTO `course` (`course_id`, `course_name`, `major_id`) VALUES
+(1, 'วิทยาการคอมพิวเตอร์', 1),
+(2, 'เทคโนโลยีสารสนเทศ', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `durable_article`
 --
 
+DROP TABLE IF EXISTS `durable_article`;
 CREATE TABLE IF NOT EXISTS `durable_article` (
   `durable_id` int(11) NOT NULL AUTO_INCREMENT,
   `durable_code` varchar(255) NOT NULL,
@@ -199,6 +231,8 @@ CREATE TABLE IF NOT EXISTS `durable_article` (
   `price` double DEFAULT NULL,
   `durable_status_id` int(11) NOT NULL,
   `room_id` int(11) NOT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `major_id` int(11) DEFAULT NULL,
   `description` longtext,
   `durable_age` int(11) DEFAULT NULL,
   `scrap_value` double DEFAULT NULL,
@@ -210,30 +244,33 @@ CREATE TABLE IF NOT EXISTS `durable_article` (
   KEY `fk_durable_article_users1_idx` (`user_id`),
   KEY `fk_durable_article_category1_idx` (`cat_id`),
   KEY `fk_durable_article_rooms1_idx` (`room_id`),
-  KEY `borrow_status` (`borrow_status`)
+  KEY `borrow_status` (`borrow_status`),
+  KEY `major_id` (`major_id`),
+  KEY `course_id` (`course_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `durable_article`
 --
 
-INSERT INTO `durable_article` (`durable_id`, `durable_code`, `durable_name`, `use_date`, `add_date`, `cat_id`, `picture_path`, `user_id`, `price`, `durable_status_id`, `room_id`, `description`, `durable_age`, `scrap_value`, `can_borrow`, `borrow_status`) VALUES
-(1, 'วขน.งปม.คก. 010-109-387-2542', 'เก้าอี้', '2018-09-13', '2018-09-13 00:00:00', 1, 'b04f0c72f0467fe92c983c5c1aa84902.jpg', 1, 100000, 1, 17071, 'test1', 3, 1, 'Y', 2),
-(30, 'วขน.งปม.คก. 010-109-387-2544', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:03', 1, 'noimg.jpg', 1, 1, 1, 17071, '', 3, 0, 'N', 2),
-(31, 'วขน.งปม.คก. 010-109-387-2545', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:58', 1, 'noimg.jpg', 1, 1, 1, 17071, '', 3, 0, 'N', 2),
-(32, 'วขน.งปม.คก. 010-109-387-2546', 'เก้าอี้', '2018-09-13', '2018-09-13 00:00:00', 1, 'noimg.jpg', 1, 100000, 1, 17071, 'test1', 3, 1, 'N', 2),
-(33, 'วขน.งปม.คก. 010-109-387-2547', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:03', 1, 'noimg.jpg', 1, 1, 1, 17071, '', 3, 0, 'N', 2),
-(34, 'วขน.งปม.คก. 010-109-387-2548', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:58', 1, 'noimg.jpg', 1, 1, 1, 17071, '', 3, 0, 'N', 2),
-(35, 'วขน.งปม.คก. 010-109-387-2549', 'เก้าอี้', '2018-09-13', '2018-09-13 00:00:00', 1, 'noimg.jpg', 1, 100000, 1, 17071, 'test1', 3, 1, 'N', 2),
-(36, 'วขน.งปม.คก. 010-109-387-2550', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:03', 1, 'noimg.jpg', 1, 1, 1, 17071, '', 3, 0, 'N', 2),
-(37, 'วขน.งปม.คก. 010-109-387-2551', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:58', 1, 'noimg.jpg', 1, 1, 1, 17071, '', 3, 0, 'N', 2),
-(38, 'วขน.งปม.คก. 010-109-387-2552', 'เก้าอี้', '2018-09-13', '2018-09-13 00:00:00', 1, 'noimg.jpg', 1, 100000, 1, 17071, 'test1', 3, 1, 'N', 2),
-(39, 'วขน.งปม.คก. 010-109-387-2553', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:03', 1, 'noimg.jpg', 1, 1, 1, 17071, '', 3, 0, 'N', 2),
-(40, 'วขน.งปม.คก. 010-109-387-2554', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:58', 1, 'noimg.jpg', 1, 1, 1, 17071, '', 3, 0, 'N', 2);
+INSERT INTO `durable_article` (`durable_id`, `durable_code`, `durable_name`, `use_date`, `add_date`, `cat_id`, `picture_path`, `user_id`, `price`, `durable_status_id`, `room_id`, `course_id`, `major_id`, `description`, `durable_age`, `scrap_value`, `can_borrow`, `borrow_status`) VALUES
+(1, 'วขน.งปม.คก. 010-109-387-2542', 'เก้าอี้', '2018-09-13', '2018-09-13 00:00:00', 1, 'b04f0c72f0467fe92c983c5c1aa84902.jpg', 1, 100000, 1, 2, NULL, NULL, 'test1', 3, 1, 'Y', 2),
+(30, 'วขน.งปม.คก. 010-109-387-2544', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:03', 1, 'noimg.jpg', 1, 1, 1, 2, NULL, NULL, '', 3, 0, 'N', 2),
+(31, 'วขน.งปม.คก. 010-109-387-2545', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:58', 1, 'noimg.jpg', 1, 1, 1, 2, NULL, NULL, '', 3, 0, 'N', 2),
+(32, 'วขน.งปม.คก. 010-109-387-2546', 'เก้าอี้', '2018-09-13', '2018-09-13 00:00:00', 1, 'noimg.jpg', 1, 100000, 1, 2, NULL, NULL, 'test1', 3, 1, 'N', 2),
+(33, 'วขน.งปม.คก. 010-109-387-2547', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:03', 1, 'noimg.jpg', 1, 1, 1, 2, NULL, NULL, '', 3, 0, 'N', 2),
+(34, 'วขน.งปม.คก. 010-109-387-2548', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:58', 1, 'noimg.jpg', 1, 1, 1, 2, NULL, NULL, '', 3, 0, 'N', 2),
+(35, 'วขน.งปม.คก. 010-109-387-2549', 'เก้าอี้', '2018-09-13', '2018-09-13 00:00:00', 1, 'noimg.jpg', 1, 100000, 1, 2, NULL, NULL, 'test1', 3, 1, 'N', 2),
+(36, 'วขน.งปม.คก. 010-109-387-2550', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:03', 1, 'noimg.jpg', 1, 1, 1, 2, NULL, NULL, '', 3, 0, 'N', 2),
+(37, 'วขน.งปม.คก. 010-109-387-2551', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:58', 1, 'noimg.jpg', 1, 1, 1, 2, NULL, NULL, '', 3, 0, 'N', 2),
+(38, 'วขน.งปม.คก. 010-109-387-2552', 'เก้าอี้', '2018-09-13', '2018-09-13 00:00:00', 1, 'noimg.jpg', 1, 100000, 1, 2, NULL, NULL, 'test1', 3, 1, 'N', 2),
+(39, 'วขน.งปม.คก. 010-109-387-2553', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:03', 1, 'noimg.jpg', 1, 1, 1, 2, NULL, NULL, '', 3, 0, 'N', 2),
+(40, 'วขน.งปม.คก. 010-109-387-2554', 'เก้าอี้', '2019-01-31', '2019-01-31 14:18:58', 1, 'noimg.jpg', 1, 1, 1, 2, NULL, NULL, '', 3, 0, 'N', 2);
 
 --
 -- Triggers `durable_article`
 --
+DROP TRIGGER IF EXISTS `durable_add_date`;
 DELIMITER $$
 CREATE TRIGGER `durable_add_date` BEFORE INSERT ON `durable_article` FOR EACH ROW BEGIN
 	IF (NEW.add_date IS NULL) THEN
@@ -249,6 +286,7 @@ DELIMITER ;
 -- Table structure for table `durable_status`
 --
 
+DROP TABLE IF EXISTS `durable_status`;
 CREATE TABLE IF NOT EXISTS `durable_status` (
   `durable_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `durable_status_name` varchar(255) NOT NULL,
@@ -270,6 +308,7 @@ INSERT INTO `durable_status` (`durable_status_id`, `durable_status_name`) VALUES
 -- Table structure for table `faculties`
 --
 
+DROP TABLE IF EXISTS `faculties`;
 CREATE TABLE IF NOT EXISTS `faculties` (
   `faculty_id` int(11) NOT NULL AUTO_INCREMENT,
   `faculty_name` varchar(45) NOT NULL,
@@ -289,6 +328,7 @@ INSERT INTO `faculties` (`faculty_id`, `faculty_name`) VALUES
 -- Table structure for table `identify_log`
 --
 
+DROP TABLE IF EXISTS `identify_log`;
 CREATE TABLE IF NOT EXISTS `identify_log` (
   `identify_log_id` int(11) NOT NULL AUTO_INCREMENT,
   `durable_id` int(11) NOT NULL,
@@ -304,6 +344,7 @@ CREATE TABLE IF NOT EXISTS `identify_log` (
 --
 -- Triggers `identify_log`
 --
+DROP TRIGGER IF EXISTS `identify_datetime`;
 DELIMITER $$
 CREATE TRIGGER `identify_datetime` BEFORE INSERT ON `identify_log` FOR EACH ROW BEGIN
 	IF (NEW.identify_datetime IS NULL) THEN
@@ -319,6 +360,7 @@ DELIMITER ;
 -- Table structure for table `identify_status`
 --
 
+DROP TABLE IF EXISTS `identify_status`;
 CREATE TABLE IF NOT EXISTS `identify_status` (
   `identify_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `identify_status_name` varchar(255) NOT NULL,
@@ -331,6 +373,7 @@ CREATE TABLE IF NOT EXISTS `identify_status` (
 -- Table structure for table `majors`
 --
 
+DROP TABLE IF EXISTS `majors`;
 CREATE TABLE IF NOT EXISTS `majors` (
   `major_id` int(11) NOT NULL AUTO_INCREMENT,
   `major_name` varchar(45) DEFAULT NULL,
@@ -352,6 +395,7 @@ INSERT INTO `majors` (`major_id`, `major_name`, `faculty_id`) VALUES
 -- Table structure for table `problem_report`
 --
 
+DROP TABLE IF EXISTS `problem_report`;
 CREATE TABLE IF NOT EXISTS `problem_report` (
   `problem_id` int(11) NOT NULL AUTO_INCREMENT,
   `problem_topic` varchar(255) NOT NULL,
@@ -380,6 +424,7 @@ INSERT INTO `problem_report` (`problem_id`, `problem_topic`, `problem_detail`, `
 --
 -- Triggers `problem_report`
 --
+DROP TRIGGER IF EXISTS `report_add_time`;
 DELIMITER $$
 CREATE TRIGGER `report_add_time` BEFORE INSERT ON `problem_report` FOR EACH ROW BEGIN
 	IF (NEW.report_datetime IS NULL) THEN
@@ -395,6 +440,7 @@ DELIMITER ;
 -- Table structure for table `problem_status`
 --
 
+DROP TABLE IF EXISTS `problem_status`;
 CREATE TABLE IF NOT EXISTS `problem_status` (
   `problem_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `problem_status_name` varchar(255) NOT NULL,
@@ -418,20 +464,22 @@ INSERT INTO `problem_status` (`problem_status_id`, `problem_status_name`) VALUES
 -- Table structure for table `rooms`
 --
 
+DROP TABLE IF EXISTS `rooms`;
 CREATE TABLE IF NOT EXISTS `rooms` (
-  `room_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL AUTO_INCREMENT,
   `room_name` varchar(255) DEFAULT NULL,
-  `building_id` int(11) NOT NULL,
+  `building_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`room_id`),
   KEY `fk_rooms_buildings1_idx` (`building_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `rooms`
 --
 
 INSERT INTO `rooms` (`room_id`, `room_name`, `building_id`) VALUES
-(17071, '17071', 1);
+(1, 'ไม่มี', NULL),
+(2, '17071', 1);
 
 -- --------------------------------------------------------
 
@@ -439,6 +487,7 @@ INSERT INTO `rooms` (`room_id`, `room_name`, `building_id`) VALUES
 -- Table structure for table `sysconfig`
 --
 
+DROP TABLE IF EXISTS `sysconfig`;
 CREATE TABLE IF NOT EXISTS `sysconfig` (
   `syscode` char(3) NOT NULL COMMENT 'รหัส',
   `sysvalue` varchar(255) DEFAULT NULL COMMENT 'ค่า',
@@ -474,6 +523,7 @@ INSERT INTO `sysconfig` (`syscode`, `sysvalue`, `sysdesc`) VALUES
 -- Table structure for table `type_user`
 --
 
+DROP TABLE IF EXISTS `type_user`;
 CREATE TABLE IF NOT EXISTS `type_user` (
   `type_user_id` char(1) NOT NULL,
   `type_user_name` varchar(255) DEFAULT NULL,
@@ -494,6 +544,7 @@ INSERT INTO `type_user` (`type_user_id`, `type_user_name`) VALUES
 -- Table structure for table `usage_log`
 --
 
+DROP TABLE IF EXISTS `usage_log`;
 CREATE TABLE IF NOT EXISTS `usage_log` (
   `usage_id` int(11) NOT NULL AUTO_INCREMENT,
   `durable_id` int(11) NOT NULL,
@@ -521,6 +572,7 @@ INSERT INTO `usage_log` (`usage_id`, `durable_id`, `usage_datetime`) VALUES
 --
 -- Triggers `usage_log`
 --
+DROP TRIGGER IF EXISTS `add_time_to_usagelog`;
 DELIMITER $$
 CREATE TRIGGER `add_time_to_usagelog` BEFORE INSERT ON `usage_log` FOR EACH ROW BEGIN
 	IF (NEW.usage_datetime IS NULL) THEN
@@ -536,6 +588,7 @@ DELIMITER ;
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(255) DEFAULT NULL,
@@ -566,6 +619,7 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_surname`, `user_email`, `user
 --
 -- Triggers `users`
 --
+DROP TRIGGER IF EXISTS `add_register_date_users`;
 DELIMITER $$
 CREATE TRIGGER `add_register_date_users` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
 	IF (NEW.register_date IS NULL) THEN
@@ -594,13 +648,21 @@ ALTER TABLE `buildings`
   ADD CONSTRAINT `fk_buildings_campus1` FOREIGN KEY (`campus_id`) REFERENCES `campus` (`campus_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `course`
+--
+ALTER TABLE `course`
+  ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`major_id`) REFERENCES `majors` (`major_id`);
+
+--
 -- Constraints for table `durable_article`
 --
 ALTER TABLE `durable_article`
   ADD CONSTRAINT `durable_article_ibfk_1` FOREIGN KEY (`borrow_status`) REFERENCES `borrow_status` (`borrow_status_id`),
+  ADD CONSTRAINT `durable_article_ibfk_2` FOREIGN KEY (`major_id`) REFERENCES `majors` (`major_id`),
+  ADD CONSTRAINT `durable_article_ibfk_3` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`),
+  ADD CONSTRAINT `durable_article_ibfk_4` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_durable_article_category1` FOREIGN KEY (`cat_id`) REFERENCES `category` (`cat_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_durable_article_durable_status` FOREIGN KEY (`durable_status_id`) REFERENCES `durable_status` (`durable_status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_durable_article_rooms1` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_durable_article_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --

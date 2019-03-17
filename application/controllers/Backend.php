@@ -340,7 +340,19 @@ class Backend extends CI_Controller {
 		}
 	}
 
-
+	public function form_qr_by_room()
+	{
+		authen_sys();
+		$sysname = $this->sysconfig->sysname();
+		$query = $this->durable_model->getCampus();
+		$data = array(
+			'sysname' => $sysname[0]->sysvalue,
+			'page' => 'backend/form_qr_by_room',
+			'menu' => 'form_qr_by_room',
+			'campus' => $query
+		);
+		$this->load->view('main',$data);
+	}
 
 
 

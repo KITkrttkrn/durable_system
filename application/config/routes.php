@@ -81,6 +81,7 @@ $route['profile_detail/(:num)'] = 'backend/profile_detail/$1';
 $route['insert_durable'] = 'backend/form_durable';
 $route['edit_durable/(:num)'] = 'backend/form_durable/$1';
 $route['save_durable'] = 'backend/save_durable';
+$route['form_qr_by_room'] = 'backend/form_qr_by_room';
 
 
 //User Controller
@@ -95,6 +96,8 @@ $route['process_user_detail'] = 'user/process_user_detail';
 
 //Ajax Controller
 $route['get_major_id'] = 'ajax/get_major_id';
+$route['get_building_id'] = 'ajax/get_building_id';
+$route['get_room_id'] = 'ajax/get_room_id';
 
 //Borrow Controller
 $route['borrow_durable'] = 'borrow/index';

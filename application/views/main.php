@@ -79,7 +79,7 @@
                                     <a href="<?= site_url('dashboard'); ?>">
                                         <i class="fa fa-home"></i> Dashboard </a>
                                 </li>
-                                <li <?php if($menu == 'insert_durable' OR $menu == 'manage_durable' OR $menu == 'manage_depreciation'){ echo "class=\"active\""; } ?>>
+                                <li <?php if($menu == 'insert_durable' OR $menu == 'manage_durable' OR $menu == 'manage_depreciation' OR $menu == 'form_qr_by_room'){ echo "class=\"active\""; } ?>>
                                     <a href="">
                                         <!-- <i class="fa fa-th-large"></i> --> ครุภัณฑ์
                                         <i class="fa arrow"></i>
@@ -93,6 +93,9 @@
                                         </li>
                                         <li <?php if($menu == 'manage_depreciation'){ echo "class=\"active\""; } ?>>
                                             <a href="<?= site_url('manage_depreciation');?>"> รายการคำนวณค่าเสื่อมราคา </a>
+                                        </li>
+                                        <li <?php if($menu == 'form_qr_by_room'){ echo "class=\"active\""; } ?>>
+                                            <a href="<?= site_url('form_qr_by_room');?>"> พิมพ์ QrCode ด้วยเลขห้อง </a>
                                         </li>
                                     </ul>
                                 </li>
