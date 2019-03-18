@@ -12,22 +12,22 @@
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label class="control-label">เลขครุภัณฑ์</label>
-                                            <input name="durable_code" value="<?php echo $durable_code; ?>" placeholder="เลขครุภัณฑ์" type="text" class="form-control"> 
+                                            <input required name="durable_code" value="<?php echo $durable_code; ?>" placeholder="เลขครุภัณฑ์" type="text" class="form-control"> 
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="control-label">ชื่อครุภัณฑ์</label>
-                                            <input name="durable_name" value="<?php echo $durable_name; ?>" placeholder="ชื่อครุภัณฑ์" type="text" class="form-control">
+                                            <input required name="durable_name" value="<?php echo $durable_name; ?>" placeholder="ชื่อครุภัณฑ์" type="text" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label class="control-label">วันที่เริ่มใช้งาน</label>
-                                            <input name="use_date" value="<?php echo $use_date; ?>" placeholder="วันที่เริ่มใช้งาน" type="date" id="datepicker" class="form-control"> 
+                                            <input required name="use_date" value="<?php echo $use_date; ?>" placeholder="วันที่เริ่มใช้งาน" type="date" id="datepicker" class="form-control"> 
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="control-label">ประเภทครุภัณฑ์</label>
                                             <div class="form-group">
-                                            <select name="cat_id" class="form-control">
+                                            <select required name="cat_id" class="form-control">
                                                 <option value=""><?php echo "--ประเภทครุภัณฑ์--"; ?></option>
                                             <?php 
                                             foreach ($query_cat as $r_cat)
@@ -59,33 +59,83 @@
                                             
                                             </div>
                                         <div class="form-group col-md-6">
-                                            <label class="control-label">ผู้ดูแลครุภัณฑ์</label>
-                                            <div class="form-group">
-                                            <select name="user_id" class="form-control">
-                                                <option value=""><?php echo "--ผู้ดูแลครุภัณฑ์--"; ?></option>
-                                            <?php 
-                                            foreach($query_user as $r_user) 
-                                            {
-                                                if($user_id == $r_user){
-                                                    echo "<option value=\"".$r_user->user_id."\" selected>".$r_user->user_id." ".$r_user->user_name."</option>";
-                                                }else{
-                                                    echo "<option value=\"".$r_user->user_id."\">".$r_user->user_id." ".$r_user->user_name."</option>";
-                                                }
-                                                
-                                            }
-                                            ?>
-                                            </select>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label">คณะ</label>
+                                                    <div class="form-group">
+                                                    <select required id="faculty_id" name="faculty_id" class="form-control">
+                                                        <option value=""><?php echo "--คณะ--"; ?></option>
+                                                    <?php 
+                                                    foreach($query_faculties as $r_user) 
+                                                    {
+                                                        if($user_id == $r_user){
+                                                            echo "<option value=\"".$r_user->user_id."\" selected>".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }else{
+                                                            echo "<option value=\"".$r_user->user_id."\">".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }
+                                                        
+                                                    }
+                                                    ?>
+                                                    </select>
+                                                    </div>
+                                                </div>
                                             </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label">สาขา</label>
+                                                    <div class="form-group">
+                                                    <select required id="major_id" name="major_id" class="form-control">
+                                                        <option value=""><?php echo "--คณะ--"; ?></option>
+                                                    <?php 
+                                                    foreach($query_faculties as $r_user) 
+                                                    {
+                                                        if($user_id == $r_user){
+                                                            echo "<option value=\"".$r_user->user_id."\" selected>".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }else{
+                                                            echo "<option value=\"".$r_user->user_id."\">".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }
+                                                        
+                                                    }
+                                                    ?>
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label">หลักสูตร</label>
+                                                    <div class="form-group">
+                                                    <select required id="course_id" name="course_id" class="form-control">
+                                                        <option value=""><?php echo "--คณะ--"; ?></option>
+                                                    <?php 
+                                                    foreach($query_faculties as $r_user) 
+                                                    {
+                                                        if($user_id == $r_user){
+                                                            echo "<option value=\"".$r_user->user_id."\" selected>".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }else{
+                                                            echo "<option value=\"".$r_user->user_id."\">".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }
+                                                        
+                                                    }
+                                                    ?>
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label class="control-label">ราคาครุภัณฑ์</label>
-                                            <input name="price" value="<?php echo $price; ?>" placeholder="ราคาครุภัณฑ์" type="text" class="form-control"> 
+                                            <input required name="price" value="<?php echo $price; ?>" placeholder="ราคาครุภัณฑ์" type="text" class="form-control"> 
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="control-label">มูลค่าซากครุภัณฑ์</label>
-                                            <input name="scrap_value" value="<?php echo $scrap_value; ?>" placeholder="มูลค่าซากครุภัณฑ์" type="text" class="form-control">
+                                            <input required name="scrap_value" value="<?php echo $scrap_value; ?>" placeholder="มูลค่าซากครุภัณฑ์" type="text" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -96,7 +146,7 @@
                                         <div class="form-group col-md-6">
                                             <label class="control-label">ห้องของครุภัณฑ์</label>
                                             <div class="form-group">
-                                            <select name="room_id" class="form-control">
+                                            <select required name="room_id" class="form-control">
                                                 <option value="0"><?php echo "--ห้องของครุภัณฑ์--"; ?></option>
                                             <?php 
                                             foreach($query_room as $r_room) 
@@ -117,7 +167,7 @@
                                         <div class="form-group col-md-6">
                                             <label class="control-label">สถานะครุภัณฑ์</label>
                                             <div class="form-group">
-                                            <select name="durable_status_id" class="form-control">
+                                            <select required name="durable_status_id" class="form-control">
                                             <?php 
                                             foreach($query_durable_status as $r_durable_status) 
                                             {
@@ -134,7 +184,7 @@
                                         <div class="form-group col-md-6">
                                             <label class="control-label">สามารถยืมครุภัณฑ์</label>
                                             <div class="form-group">
-                                            <select name="can_borrow" class="form-control">
+                                            <select required name="can_borrow" class="form-control">
                                                 <option value=""> --โปรดเลือก-- </option>       
                                                 <option value="Y" <?php if($can_borrow == 'Y'){ echo "selected"; } ?>>ได้</option>
                                                 <option value="N" <?php if($can_borrow == 'N'){ echo "selected"; } ?>>ไม่ได้</option>

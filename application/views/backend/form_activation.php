@@ -51,7 +51,7 @@
 										</div>
 							</font>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-block btn-primary">Activate</button>
+                                <button id="btn-submit" type="submit" class="btn btn-block btn-primary">Activate</button>
                             </div>
                             
                         </form>
@@ -80,11 +80,13 @@
     if (password != confirmPassword){
         //$("#divCheckPasswordMatch").html("<p>***รหัสผ่านทั้งสองไม่ตรงกัน</p>");
 		$result.text("***รหัสผ่านทั้งสองไม่ตรงกัน");
-        $result.css("color", "red");		
+        $result.css("color", "red");	
+        $("#btn-submit").prop('disabled', true);
 	}else{
         $("#divCheckPasswordMatch").html("***รหัสผ่านทั้งสองตรงกัน");
 		$result.text("***รหัสผ่านทั้งสองตรงกัน");
         $result.css("color", "green");	
+        $("#btn-submit").prop('disabled', false);
 	}	
 }
  </script>

@@ -5,7 +5,7 @@ class login_model extends CI_Model {
     {
         $sql = "select 
         user_id
-    ,	concat(u.user_name,' ',u.user_surname)   uname 
+    ,	concat(user_name,' ',user_surname)   uname 
     ,   user_status_id
     ,   type_user_id
     ,   major_id

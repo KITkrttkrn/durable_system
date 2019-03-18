@@ -21,21 +21,24 @@
                                     <input type="hidden" class="form-control" name="register_date" id="register_date" value="<?php echo $register_date; ?>">
                                     <?php }?>
                                     <div class="row">
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-12 has-error">
                                             <label class="control-label"> ชื่อ </label>
-                                            <input name="user_name" value="<?php echo $user_name; ?>" placeholder="ชื่อ" type="text" class="form-control"> 
+                                            <input required name="user_name" value="<?php echo $user_name; ?>" placeholder="ชื่อ" type="text" class="form-control">
+                                            <span class="has-error"><?php echo validation_errors('user_name'); ?></span>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-12 has-error">
                                             <label class="control-label"> นามสกุล </label>
-                                            <input name="user_surname" value="<?php echo $user_surname; ?>" placeholder="นามสกุล" type="text" class="form-control">
+                                            <input required name="user_surname" value="<?php echo $user_surname; ?>" placeholder="นามสกุล" type="text" class="form-control">
+                                            <span class="has-error"><?php echo validation_errors('user_surname'); ?></span>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-12 has-error">
                                             <label class="control-label"> Email </label>
-                                            <input name="user_email" value="<?php echo $user_email; ?>" placeholder="กรอก Email" type="text" class="form-control"> 
+                                            <input required name="user_email" value="<?php echo $user_email; ?>" placeholder="กรอก Email" type="text" class="form-control"> 
+                                            <span class="has-error"><?php echo validation_errors('user_email'); ?></span>
                                         </div>
                                     </div>
                                     <?php if($user_password != ""){ ?>
@@ -43,7 +46,7 @@
                                         <div class="form-group col-md-12">
                                             <label class="control-label"> รหัสผ่าน </label>
                                             <div class="form-group">
-                                             <input name="user_password" id="u_pass" value="<?php echo $user_password ?>" placeholder="กรอกรหัสผ่าน" type="password" class="form-control"> 
+                                             <input required name="user_password" id="u_pass" value="<?php echo $user_password ?>" placeholder="กรอกรหัสผ่าน" type="password" class="form-control"> 
                                             </div>
                                         </div>
                                     </div>
@@ -51,7 +54,7 @@
                                         <div class="form-group col-md-12">
                                             <label class="control-label"> กรอกรหัสผ่านอีกครั้ง </label>
                                             <div class="form-group">
-                                             <input name="user_password2" id="u_pass2" value="<?php echo $user_password ?>" placeholder="กรอกรหัสผ่านอีกครั้ง" type="password" class="form-control"> 
+                                             <input required name="user_password2" id="u_pass2" value="<?php echo $user_password ?>" placeholder="กรอกรหัสผ่านอีกครั้ง" type="password" class="form-control"> 
                                             </div>
                                             <font color="red">
 										<div class="registrationFormAlert" id="divCheckPasswordMatch">&nbsp;</div>
@@ -65,7 +68,7 @@
            <?php 
            echo "<div class=\"controls col-md-12\">";
            echo "<label for=\"faculty\">คณะ</label>";
-       	   echo "<select class=\"form-control\" id=\"faculty\" name=\"faculty_id\">";
+       	   echo "<select required class=\"form-control\" id=\"faculty\" name=\"faculty_id\">";
            echo	"<option value=\"0\">---เลือกคณะ---</option>";
 		    foreach($query_faculty as $r){
 		            	if($r->faculty_id == $faculty_id){
@@ -82,7 +85,7 @@
                                     	<div class="form-group col-md-12">
                                         <div class="controls">
 				                            <label for="major_id">สาขา</label>
-											  <select class="form-control" name="major_id" id="majors">
+											  <select required class="form-control" name="major_id" id="majors">
 												<option value="0">---เลือกสาขา---</option>
                                                 <?php if(isset($major_id)){ 
                                                     		    foreach($query_major as $r_m){
@@ -136,6 +139,27 @@ $(document).ready(function(){
             $('#majors').html('<option value="0">---โปรดเลือกคณะก่อน---</option>'); 
         }
     });
+
+    $('#faculty').load(function(){
+        <?php if($faculty_id){ ?> 
+        var provinceID = <?php echo $faculty_id; ?> 
+        <?php }else{ ?>
+        var provinceID = $(this).val(); 
+        <?php } ?> 
+        if(provinceID != 0){
+            $.ajax({
+                type:'GET',
+                url:'<?= site_url('get_major_id'); ?>',
+                data:'pro_id='+provinceID,
+                success:function(html){
+                    $('#majors').html(html);
+                }
+            }); 
+        }else{
+            $('#majors').html('<option value="0">---โปรดเลือกคณะก่อน---</option>'); 
+        }
+    });
+
 });
 
 </script>

@@ -30,7 +30,8 @@ class User extends CI_Controller {
 		$this->load->model('user_model');
 		$this->load->model('sysconfig');
         $this->load->helper('authen');
-        $this->load->helper('token');
+		$this->load->helper('token');
+		$this->load->helper(array('form', 'url'));
 	}
 	
 	public function manage_users()
@@ -137,89 +138,99 @@ class User extends CI_Controller {
 	public function save_user()
 	{
 		authen_sysadmin();
+		$this->form_validation->set_rules('user_email', 'Email', 'is_unique[users.user_email]',
+		array(
+			'is_unique'     => 'Email ของท่านซ้ำ'
+	));
+		
 		$sysname = $this->sysconfig->sysname();
-		if($_POST['mode'] == 'I'){
-			$token = getToken(40);
-			$data = array(
-				'user_name' => $_POST['user_name'],
-				'user_surname' => $_POST['user_surname'],
-				'user_email' => $_POST['user_email'],
-				'type_user_id' => $_POST['type_user_id'],
-				'major_id' => $_POST['major_id'],
-				'user_status_id' => 'N',
-				'user_token' => $token,
-			);
-			$query = $this->user_model->insert_user($data);
-			if($query){
-				echo "<script> alert('เพิ่มผู้ใช้งานเรียบร้อย'); </script>";
-				$email_link = site_url()."/activation?email=".$_POST['user_email']."&token=".$token;
-				$user_mail = $this->sysconfig->user_mail();
-				$user_pass = $this->sysconfig->user_pass();
-				$mail_port = $this->sysconfig->mail_port();
-				$mail_host = $this->sysconfig->smtp_host();
-				$config = array(
-					'protocol'  => 'smtp',
-					'smtp_host' => $mail_host[0]->sysvalue,
-					'smtp_port' => $mail_port[0]->sysvalue,
-					'smtp_user' => $user_mail[0]->sysvalue,
-					'smtp_pass' => $user_pass[0]->sysvalue,
-					'mailtype'  => 'html',
-					'charset'   => 'utf-8'
+		if($this->form_validation->run() == TRUE){
+			if($_POST['mode'] == 'I'){
+				$token = getToken(40);
+				$data = array(
+					'user_name' => $_POST['user_name'],
+					'user_surname' => $_POST['user_surname'],
+					'user_email' => $_POST['user_email'],
+					'type_user_id' => $_POST['type_user_id'],
+					'major_id' => $_POST['major_id'],
+					'user_status_id' => 'N',
+					'user_token' => $token,
 				);
-				// print_r($config);
-				$this->email->initialize($config);
-				$this->email->set_mailtype("html");
-				$this->email->set_newline("\r\n");
-
-				//Email content
-				$htmlContent = '<h1>Durable System</h1>';
-				$htmlContent .= '<p>สวัสดี คุณ'.$_POST['user_name'].' '.$_POST['user_surname'].'</p>';
-				$htmlContent .= '<p>ลิงค์สำหรับยืนยันการเปิดบัญชีของท่านคือ</p>';
-				$htmlContent .= '<p>'.$email_link.'</p>';
-
-				$this->email->to($_POST['user_email']);
-				$this->email->from($user_mail[0]->sysvalue,'Durable System');
-				$this->email->subject('ยืนยันการสมัครบัญชีการใช้งาน');
-                $this->email->message($htmlContent);
-                
-				//Send email	
-				$this->email->send();
-										
-			}else{
-				echo "<script> alert('ไม่สามารถเพิ่มผู้ใช้งานได้'); </script>";
+				$query = $this->user_model->insert_user($data);
+				if($query){
+					echo "<script> alert('เพิ่มผู้ใช้งานเรียบร้อย'); </script>";
+					$email_link = site_url()."/activation?email=".$_POST['user_email']."&token=".$token;
+					$user_mail = $this->sysconfig->user_mail();
+					$user_pass = $this->sysconfig->user_pass();
+					$mail_port = $this->sysconfig->mail_port();
+					$mail_host = $this->sysconfig->smtp_host();
+					$config = array(
+						'protocol'  => 'smtp',
+						'smtp_host' => $mail_host[0]->sysvalue,
+						'smtp_port' => $mail_port[0]->sysvalue,
+						'smtp_user' => $user_mail[0]->sysvalue,
+						'smtp_pass' => $user_pass[0]->sysvalue,
+						'mailtype'  => 'html',
+						'charset'   => 'utf-8'
+					);
+					// print_r($config);
+					$this->email->initialize($config);
+					$this->email->set_mailtype("html");
+					$this->email->set_newline("\r\n");
+	
+					//Email content
+					$htmlContent = '<h1>Durable System</h1>';
+					$htmlContent .= '<p>สวัสดี คุณ'.$_POST['user_name'].' '.$_POST['user_surname'].'</p>';
+					$htmlContent .= '<p>ลิงค์สำหรับยืนยันการเปิดบัญชีของท่านคือ</p>';
+					$htmlContent .= '<p>'.$email_link.'</p>';
+	
+					$this->email->to($_POST['user_email']);
+					$this->email->from($user_mail[0]->sysvalue,'Durable System');
+					$this->email->subject('ยืนยันการสมัครบัญชีการใช้งาน');
+					$this->email->message($htmlContent);
+					
+					//Send email	
+					$this->email->send();
+											
+				}else{
+					echo "<script> alert('ไม่สามารถเพิ่มผู้ใช้งานได้'); </script>";
+				}
+				
+			}else if($_POST['mode'] == 'U'){
+				$id = $_POST['user_id'];
+				if(strlen($_POST['user_password']) != 40)
+				{
+					$user_password = "sha1('".$_POST['user_password']."')";
+					$data = array(
+						'user_name' => $_POST['user_name'],
+						'user_surname' => $_POST['user_surname'],
+						'user_email' => $_POST['user_email'],
+						'type_user_id' => $_POST['type_user_id'],
+						'major_id' => $_POST['major_id'],
+					);
+					$query = $this->user_model->update_user($id,$data);
+					$query = $this->user_model->update_user_and_pass($id,$user_password);
+				}else{
+					$data = array(
+						'user_name' => $_POST['user_name'],
+						'user_surname' => $_POST['user_surname'],
+						'user_email' => $_POST['user_email'],
+						'type_user_id' => $_POST['type_user_id'],
+						'major_id' => $_POST['major_id'],
+					);
+					$query = $this->user_model->update_user($id,$data);
+				}
+				if($query){
+					echo "<script> alert('แก้ไขสถานะผู้ใช้งานเรียบร้อย'); </script>";
+				}else{
+					echo "<script> alert('ไม่สามารถแก้ไขสถานะผู้ใช้งานได้'); </script>";
+				}
 			}
-			
-		}else if($_POST['mode'] == 'U'){
-            $id = $_POST['user_id'];
-            if(strlen($_POST['user_password']) != 40)
-            {
-                $user_password = "sha1('".$_POST['user_password']."')";
-                $data = array(
-                    'user_name' => $_POST['user_name'],
-                    'user_surname' => $_POST['user_surname'],
-                    'user_email' => $_POST['user_email'],
-                    'type_user_id' => $_POST['type_user_id'],
-                    'major_id' => $_POST['major_id'],
-                );
-                $query = $this->user_model->update_user($id,$data);
-                $query = $this->user_model->update_user_and_pass($id,$user_password);
-            }else{
-                $data = array(
-                    'user_name' => $_POST['user_name'],
-                    'user_surname' => $_POST['user_surname'],
-                    'user_email' => $_POST['user_email'],
-                    'type_user_id' => $_POST['type_user_id'],
-                    'major_id' => $_POST['major_id'],
-                );
-                $query = $this->user_model->update_user($id,$data);
-            }
-			if($query){
-				echo "<script> alert('แก้ไขสถานะผู้ใช้งานเรียบร้อย'); </script>";
-			}else{
-				echo "<script> alert('ไม่สามารถแก้ไขสถานะผู้ใช้งานได้'); </script>";
-			}
+			redirect("backend","refresh");
+		}else{
+
+			echo "<script> alert('".form_error('user_email')."'); window.history.back(); </script>";
 		}
-		redirect("backend","refresh");
     }
     
     public function update_profile()

@@ -96,6 +96,13 @@ class durable_model extends CI_Model {
 			return $result->result();
 		}
 
+		public function get_faculties()
+		{
+			$q = $this->db->select('*');
+			$q = $this->db->get('faculties');
+			return $q->result();
+		}
+
 		public function get_user()
 		{
 			$sql = "select 
