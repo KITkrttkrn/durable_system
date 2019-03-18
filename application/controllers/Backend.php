@@ -14,7 +14,6 @@ class Backend extends CI_Controller {
 		$this->load->model('report_model');
 		$this->load->model('user_model');
 		$this->load->model('sysconfig');
-		$this->load->helper(array('form', 'url'));
 		$this->load->helper('authen');
 	}
 
@@ -184,7 +183,7 @@ class Backend extends CI_Controller {
             
             $result = $this->durable_model->get_durable_nojoin_by_id($o_id);
 			$query_cat = $this->durable_model->get_cat();
-			$query_faculties = $this->durable_model->get_faculties();
+			$query_user = $this->durable_model->get_user();
 			$query_room = $this->durable_model->get_room();
 			$query_durable_status = $this->durable_model->get_durable_status();
             foreach($result as $row) 
@@ -211,7 +210,7 @@ class Backend extends CI_Controller {
 					'description' => $row->description,
 					'can_borrow' => $row->can_borrow,
 					'query_cat' => $query_cat,
-					'query_faculties' => $query_faculties,
+					'query_user' => $query_user,
 					'query_room' => $query_room,
 					'query_durable_status' => $query_durable_status,
                 );
@@ -258,99 +257,86 @@ class Backend extends CI_Controller {
 
 	public function save_durable()
 	{
-		$this->form_validation->set_rules('durable_code', 'Durablecode', 'is_unique[durable_article.durable_code]',
-		array(
-			'is_unique'     => 'เลขครุภัณฑ์ซ้ำ'
-		));
-		if($this->form_validation->run() == TRUE){
-			if($_FILES['com_img']){
-				$config['upload_path']          = '.\resources\durable';
-				$config['allowed_types']        = 'jpg|jpeg|png|PNG|JPG|JPEG';
-				$config['max_size']             = 6000;
-				$config['encrypt_name']         = TRUE;
-		
-				$this->upload->initialize($config);
-		
-				if ( ! $this->upload->do_upload('com_img'))
-				{
-						$error = array('error' => $this->upload->display_errors());
-						echo $error['error'];
-						echo '<script> window.history.go(-1); </script>';
-				}
-				else
-				{
-						$data_pic = array('upload_data' => $this->upload->data());
-						$picture_path = $data_pic['upload_data']['file_name'];
-				}
-			}else{
-				$picture_path = $_POST['picture_path'];
-			}
+		if($_FILES['com_img']){
+			$config['upload_path']          = '.\resources\durable';
+			$config['allowed_types']        = 'jpg|jpeg|png|PNG|JPG|JPEG';
+			$config['max_size']             = 6000;
+			$config['encrypt_name']         = TRUE;
 	
-			if($_POST['durable_age'] != ""){
-				$durable_age[0]->durable_age = $_POST['durable_age'];
-			}else{
-				$durable_age = $this->durable_model->find_durable_age($_POST['cat_id']);
-			}
+			$this->upload->initialize($config);
 	
-			// print_r($durable_age);
-	
-			if($_POST['mode'] == 'I'){
-				$data = array(
-					'durable_code' => $_POST['durable_code'],
-					'durable_name' => $_POST['durable_name'],
-					'use_date' => $_POST['use_date'],
-					'cat_id' => $_POST['cat_id'],
-					'picture_path' => $picture_path,
-					'user_id' => $_SESSION['uid'],
-					'price' => $_POST['price'],
-					'durable_status_id' => $_POST['durable_status_id'],
-					'room_id' => $_POST['room_id'],
-					'description' => $_POST['description'],
-					'durable_age' => $durable_age[0]->durable_age,
-					'scrap_value' => $_POST['scrap_value'],
-					'can_borrow' => $_POST['can_borrow'],
-					'borrow_status' => '2',
-					'course_id' => $_POST['course_id'],
-					'major_id' => $_POST['major_id'],
-				);
-				$result = $this->durable_model->insert_durable($data);
-				if($result){
-					echo '<script> alert(\'เพิ่มข้อมูลครุภัณฑ์เรียบร้อย\'); </script>';
-					redirect('insert_durable','refresh');
-				}else{
-					echo '<script> alert(\'ไม่สามารถเพิ่มข้อมูลครุภัณฑ์ได้\'); </script>';
+			if ( ! $this->upload->do_upload('com_img'))
+			{
+					$error = array('error' => $this->upload->display_errors());
+					echo $error['error'];
 					echo '<script> window.history.go(-1); </script>';
-				}
-			}else if($_POST['mode'] == 'U'){
-				$data = array(
-					'durable_code' => $_POST['durable_code'],
-					'durable_name' => $_POST['durable_name'],
-					'use_date' => $_POST['use_date'],
-					'cat_id' => $_POST['cat_id'],
-					'picture_path' => $picture_path,
-					'user_id' => $_POST['user_id'],
-					'price' => $_POST['price'],
-					'durable_status_id' => $_POST['durable_status_id'],
-					'room_id' => $_POST['room_id'],
-					'description' => $_POST['description'],
-					'durable_age' => $durable_age[0]->durable_age,
-					'scrap_value' => $_POST['scrap_value'],
-					'can_borrow' => $_POST['can_borrow'],
-					'course_id' => $_POST['course_id'],
-					'major_id' => $_POST['major_id'],
-				);
-				$result = $this->durable_model->update_durable($_POST['durable_id'],$data);
-				if($result){
-					echo '<script> alert(\'แก้ไขข้อมูลครุภัณฑ์เรียบร้อย\'); </script>';
-					redirect('durable_detail/'.$_POST['durable_id'],'refresh');
-				}else{
-					echo '<script> alert(\'ไม่สามารถแก้ไขข้อมูลครุภัณฑ์ได้\'); </script>';
-					echo '<script> window.history.go(-1); </script>';
-				}
 			}
-
+			else
+			{
+					$data_pic = array('upload_data' => $this->upload->data());
+					$picture_path = $data_pic['upload_data']['file_name'];
+			}
 		}else{
-			echo "<script> alert('".form_error('durable_code')."'); window.history.back(); </script>";
+			$picture_path = $_POST['picture_path'];
+		}
+
+		if($_POST['durable_age'] != ""){
+			$durable_age[0]->durable_age = $_POST['durable_age'];
+		}else{
+			$durable_age = $this->durable_model->find_durable_age($_POST['cat_id']);
+		}
+
+		// print_r($durable_age);
+
+		if($_POST['mode'] == 'I'){
+			$data = array(
+				'durable_code' => $_POST['durable_code'],
+				'durable_name' => $_POST['durable_name'],
+				'use_date' => $_POST['use_date'],
+				'cat_id' => $_POST['cat_id'],
+				'picture_path' => $picture_path,
+				'user_id' => $_POST['user_id'],
+				'price' => $_POST['price'],
+				'durable_status_id' => $_POST['durable_status_id'],
+				'room_id' => $_POST['room_id'],
+				'description' => $_POST['description'],
+				'durable_age' => $durable_age[0]->durable_age,
+				'scrap_value' => $_POST['scrap_value'],
+				'can_borrow' => $_POST['can_borrow'],
+				'borrow_status' => '2',
+			);
+			$result = $this->durable_model->insert_durable($data);
+			if($result){
+				echo '<script> alert(\'เพิ่มข้อมูลครุภัณฑ์เรียบร้อย\'); </script>';
+				redirect('insert_durable','refresh');
+			}else{
+				echo '<script> alert(\'ไม่สามารถเพิ่มข้อมูลครุภัณฑ์ได้\'); </script>';
+				echo '<script> window.history.go(-1); </script>';
+			}
+		}else if($_POST['mode'] == 'U'){
+			$data = array(
+				'durable_code' => $_POST['durable_code'],
+				'durable_name' => $_POST['durable_name'],
+				'use_date' => $_POST['use_date'],
+				'cat_id' => $_POST['cat_id'],
+				'picture_path' => $picture_path,
+				'user_id' => $_POST['user_id'],
+				'price' => $_POST['price'],
+				'durable_status_id' => $_POST['durable_status_id'],
+				'room_id' => $_POST['room_id'],
+				'description' => $_POST['description'],
+				'durable_age' => $durable_age[0]->durable_age,
+				'scrap_value' => $_POST['scrap_value'],
+				'can_borrow' => $_POST['can_borrow'],
+			);
+			$result = $this->durable_model->update_durable($_POST['durable_id'],$data);
+			if($result){
+				echo '<script> alert(\'แก้ไขข้อมูลครุภัณฑ์เรียบร้อย\'); </script>';
+				redirect('durable_detail/'.$_POST['durable_id'],'refresh');
+			}else{
+				echo '<script> alert(\'ไม่สามารถแก้ไขข้อมูลครุภัณฑ์ได้\'); </script>';
+				echo '<script> window.history.go(-1); </script>';
+			}
 		}
 	}
 

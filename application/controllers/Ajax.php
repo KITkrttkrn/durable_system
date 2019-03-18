@@ -32,7 +32,7 @@ class Ajax extends CI_Controller {
                     echo '<option value="'.$r->major_id.'">'.$r->major_name.'</option>';
                 }
             }else{
-                echo '<option value="">----สาขา---</option>';
+                echo '<option value="">State not available</option>';
             }
         }
         
@@ -55,7 +55,7 @@ class Ajax extends CI_Controller {
                     echo '<option value="'.$r->building_id.'">'.$r->building_name.'</option>';
                 }
             }else{
-                echo '<option value="0">----อาคาร---</option>';
+                echo '<option value="">State not available</option>';
             }
         }
         
@@ -78,7 +78,7 @@ class Ajax extends CI_Controller {
                     echo '<option value="'.$r->room_id.'">'.$r->room_name.'</option>';
                 }
             }else{
-                echo '<option value="0">----ห้อง---</option>';
+                echo '<option value="">State not available</option>';
             }
         }
         
