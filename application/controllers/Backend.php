@@ -289,30 +289,39 @@ class Backend extends CI_Controller {
 		// print_r($durable_age);
 
 		if($_POST['mode'] == 'I'){
-			$data = array(
-				'durable_code' => $_POST['durable_code'],
-				'durable_name' => $_POST['durable_name'],
-				'use_date' => $_POST['use_date'],
-				'cat_id' => $_POST['cat_id'],
-				'picture_path' => $picture_path,
-				'user_id' => $_POST['user_id'],
-				'price' => $_POST['price'],
-				'durable_status_id' => $_POST['durable_status_id'],
-				'room_id' => $_POST['room_id'],
-				'description' => $_POST['description'],
-				'durable_age' => $durable_age[0]->durable_age,
-				'scrap_value' => $_POST['scrap_value'],
-				'can_borrow' => $_POST['can_borrow'],
-				'borrow_status' => '2',
-			);
-			$result = $this->durable_model->insert_durable($data);
-			if($result){
-				echo '<script> alert(\'เพิ่มข้อมูลครุภัณฑ์เรียบร้อย\'); </script>';
-				redirect('insert_durable','refresh');
+			$this->form_validation->set_rules('durable_code','Durable Code','required|is_unique[durable_article.durable_code]');
+			if($this->form_validation->run() == TRUE){
+
+				$data = array(
+					'durable_code' => $_POST['durable_code'],
+					'durable_name' => $_POST['durable_name'],
+					'use_date' => $_POST['use_date'],
+					'cat_id' => $_POST['cat_id'],
+					'picture_path' => $picture_path,
+					'user_id' => $_POST['user_id'],
+					'price' => $_POST['price'],
+					'durable_status_id' => $_POST['durable_status_id'],
+					'room_id' => $_POST['room_id'],
+					'description' => $_POST['description'],
+					'durable_age' => $durable_age[0]->durable_age,
+					'scrap_value' => $_POST['scrap_value'],
+					'can_borrow' => $_POST['can_borrow'],
+					'borrow_status' => '2',
+				);
+				$result = $this->durable_model->insert_durable($data);
+				if($result){
+					echo '<script> alert(\'เพิ่มข้อมูลครุภัณฑ์เรียบร้อย\'); </script>';
+					echo '<script> window.history.go(-1); </script>';
+				}else{
+					echo '<script> alert(\'ไม่สามารถเพิ่มข้อมูลครุภัณฑ์ได้\'); </script>';
+					echo '<script> window.history.go(-1); </script>';
+				}
+
 			}else{
-				echo '<script> alert(\'ไม่สามารถเพิ่มข้อมูลครุภัณฑ์ได้\'); </script>';
+				echo '<script> alert(\'เลขครุภัณฑ์มีซ้ำอยู่บนระบบแล้ว\'); </script>';
 				echo '<script> window.history.go(-1); </script>';
 			}
+			
 		}else if($_POST['mode'] == 'U'){
 			$data = array(
 				'durable_code' => $_POST['durable_code'],

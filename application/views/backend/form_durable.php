@@ -12,17 +12,17 @@
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label class="control-label">เลขครุภัณฑ์</label>
-                                            <input name="durable_code" value="<?php echo $durable_code; ?>" placeholder="เลขครุภัณฑ์" type="text" class="form-control"> 
+                                            <input required name="durable_code" value="<?php echo $durable_code; ?>" placeholder="เลขครุภัณฑ์" type="text" class="form-control"> 
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="control-label">ชื่อครุภัณฑ์</label>
-                                            <input name="durable_name" value="<?php echo $durable_name; ?>" placeholder="ชื่อครุภัณฑ์" type="text" class="form-control">
+                                            <input required name="durable_name" value="<?php echo $durable_name; ?>" placeholder="ชื่อครุภัณฑ์" type="text" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label class="control-label">วันที่เริ่มใช้งาน</label>
-                                            <input name="use_date" value="<?php echo $use_date; ?>" placeholder="วันที่เริ่มใช้งาน" type="date" id="datepicker" class="form-control"> 
+                                            <input required name="use_date" value="<?php echo $use_date; ?>" placeholder="วันที่เริ่มใช้งาน" type="date" id="datepicker" class="form-control"> 
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="control-label">ประเภทครุภัณฑ์</label>
@@ -81,11 +81,11 @@
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label class="control-label">ราคาครุภัณฑ์</label>
-                                            <input name="price" value="<?php echo $price; ?>" placeholder="ราคาครุภัณฑ์" type="text" class="form-control"> 
+                                            <input required name="price" value="<?php echo $price; ?>" placeholder="ราคาครุภัณฑ์" type="text" class="form-control"> 
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="control-label">มูลค่าซากครุภัณฑ์</label>
-                                            <input name="scrap_value" value="<?php echo $scrap_value; ?>" placeholder="มูลค่าซากครุภัณฑ์" type="text" class="form-control">
+                                            <input required name="scrap_value" value="<?php echo $scrap_value; ?>" placeholder="มูลค่าซากครุภัณฑ์" type="text" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row">

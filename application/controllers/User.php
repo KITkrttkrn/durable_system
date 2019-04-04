@@ -139,55 +139,63 @@ class User extends CI_Controller {
 		authen_sysadmin();
 		$sysname = $this->sysconfig->sysname();
 		if($_POST['mode'] == 'I'){
-			$token = getToken(40);
-			$data = array(
-				'user_name' => $_POST['user_name'],
-				'user_surname' => $_POST['user_surname'],
-				'user_email' => $_POST['user_email'],
-				'type_user_id' => $_POST['type_user_id'],
-				'major_id' => $_POST['major_id'],
-				'user_status_id' => 'N',
-				'user_token' => $token,
-			);
-			$query = $this->user_model->insert_user($data);
-			if($query){
-				echo "<script> alert('เพิ่มผู้ใช้งานเรียบร้อย'); </script>";
-				$email_link = site_url()."/activation?email=".$_POST['user_email']."&token=".$token;
-				$user_mail = $this->sysconfig->user_mail();
-				$user_pass = $this->sysconfig->user_pass();
-				$mail_port = $this->sysconfig->mail_port();
-				$mail_host = $this->sysconfig->smtp_host();
-				$config = array(
-					'protocol'  => 'smtp',
-					'smtp_host' => $mail_host[0]->sysvalue,
-					'smtp_port' => $mail_port[0]->sysvalue,
-					'smtp_user' => $user_mail[0]->sysvalue,
-					'smtp_pass' => $user_pass[0]->sysvalue,
-					'mailtype'  => 'html',
-					'charset'   => 'utf-8'
+			$this->form_validation->set_rules('user_email','Email','required|is_unique[users.user_email]');
+			if($this->form_validation->run() == TRUE){
+
+				$token = getToken(40);
+				$data = array(
+					'user_name' => $_POST['user_name'],
+					'user_surname' => $_POST['user_surname'],
+					'user_email' => $_POST['user_email'],
+					'type_user_id' => $_POST['type_user_id'],
+					'major_id' => $_POST['major_id'],
+					'user_status_id' => 'N',
+					'user_token' => $token,
 				);
-				// print_r($config);
-				$this->email->initialize($config);
-				$this->email->set_mailtype("html");
-				$this->email->set_newline("\r\n");
-
-				//Email content
-				$htmlContent = '<h1>Durable System</h1>';
-				$htmlContent .= '<p>สวัสดี คุณ'.$_POST['user_name'].' '.$_POST['user_surname'].'</p>';
-				$htmlContent .= '<p>ลิงค์สำหรับยืนยันการเปิดบัญชีของท่านคือ</p>';
-				$htmlContent .= '<p>'.$email_link.'</p>';
-
-				$this->email->to($_POST['user_email']);
-				$this->email->from($user_mail[0]->sysvalue,'Durable System');
-				$this->email->subject('ยืนยันการสมัครบัญชีการใช้งาน');
-                $this->email->message($htmlContent);
-                
-				//Send email	
-				$this->email->send();
-										
+				$query = $this->user_model->insert_user($data);
+				if($query){
+					echo "<script> alert('เพิ่มผู้ใช้งานเรียบร้อย'); </script>";
+					$email_link = site_url()."/activation?email=".$_POST['user_email']."&token=".$token;
+					$user_mail = $this->sysconfig->user_mail();
+					$user_pass = $this->sysconfig->user_pass();
+					$mail_port = $this->sysconfig->mail_port();
+					$mail_host = $this->sysconfig->smtp_host();
+					$config = array(
+						'protocol'  => 'smtp',
+						'smtp_host' => $mail_host[0]->sysvalue,
+						'smtp_port' => $mail_port[0]->sysvalue,
+						'smtp_user' => $user_mail[0]->sysvalue,
+						'smtp_pass' => $user_pass[0]->sysvalue,
+						'mailtype'  => 'html',
+						'charset'   => 'utf-8'
+					);
+					// print_r($config);
+					$this->email->initialize($config);
+					$this->email->set_mailtype("html");
+					$this->email->set_newline("\r\n");
+	
+					//Email content
+					$htmlContent = '<h1>Durable System</h1>';
+					$htmlContent .= '<p>สวัสดี คุณ'.$_POST['user_name'].' '.$_POST['user_surname'].'</p>';
+					$htmlContent .= '<p>ลิงค์สำหรับยืนยันการเปิดบัญชีของท่านคือ</p>';
+					$htmlContent .= '<p>'.$email_link.'</p>';
+	
+					$this->email->to($_POST['user_email']);
+					$this->email->from($user_mail[0]->sysvalue,'Durable System');
+					$this->email->subject('ยืนยันการสมัครบัญชีการใช้งาน');
+					$this->email->message($htmlContent);
+					
+					//Send email	
+					$this->email->send();
+											
+				}else{
+					echo "<script> alert('ไม่สามารถเพิ่มผู้ใช้งานได้'); </script>";
+				}
+	
 			}else{
-				echo "<script> alert('ไม่สามารถเพิ่มผู้ใช้งานได้'); </script>";
+				echo "<script> alert('Email นี้ซ้ำอยู่บนระบบแล้ว'); </script>";
 			}
+
 			
 		}else if($_POST['mode'] == 'U'){
             $id = $_POST['user_id'];
@@ -219,7 +227,7 @@ class User extends CI_Controller {
 				echo "<script> alert('ไม่สามารถแก้ไขสถานะผู้ใช้งานได้'); </script>";
 			}
 		}
-		redirect("backend","refresh");
+		redirect("insert_user","refresh");
     }
     
     public function update_profile()

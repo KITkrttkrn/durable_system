@@ -38,11 +38,11 @@
                         <input type="hidden" value="<?= $user_token; ?>" name="token" id="token">
                             <div class="form-group">
                                 <label for="password1">รหัสผ่าน</label>
-                                <input type="password" class="form-control underlined" name="password1" id="u_pass" placeholder="โปรดกรอกรหัสผ่าน" required> 
+                                <input required type="password" class="form-control underlined" name="password1" id="u_pass" placeholder="โปรดกรอกรหัสผ่าน" required> 
                             </div>
                             <div class="form-group">
                                 <label for="password1">ยืนยันรหัสผ่าน</label>
-                                <input type="password" class="form-control underlined" name="password2" id="u_pass2" placeholder="โปรดกรอกรหัสผ่านอีกครั้ง" required> 
+                                <input required type="password" class="form-control underlined" name="password2" id="u_pass2" placeholder="โปรดกรอกรหัสผ่านอีกครั้ง" required> 
                             </div>
                             <font color="red">
                                         

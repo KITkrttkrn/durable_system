@@ -23,19 +23,19 @@
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             <label class="control-label"> ชื่อ </label>
-                                            <input name="user_name" value="<?php echo $user_name; ?>" placeholder="ชื่อ" type="text" class="form-control"> 
+                                            <input required name="user_name" value="<?php echo $user_name; ?>" placeholder="ชื่อ" type="text" class="form-control"> 
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             <label class="control-label"> นามสกุล </label>
-                                            <input name="user_surname" value="<?php echo $user_surname; ?>" placeholder="นามสกุล" type="text" class="form-control">
+                                            <input required name="user_surname" value="<?php echo $user_surname; ?>" placeholder="นามสกุล" type="text" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             <label class="control-label"> Email </label>
-                                            <input name="user_email" value="<?php echo $user_email; ?>" placeholder="กรอก Email" type="text" class="form-control"> 
+                                            <input required name="user_email" value="<?php echo $user_email; ?>" placeholder="กรอก Email" type="text" class="form-control"> 
                                         </div>
                                     </div>
                                     <?php if($user_password != ""){ ?>
@@ -43,13 +43,13 @@
                                         <div class="form-group col-md-12">
                                             <label class="control-label"> รหัสผ่าน </label>
                                             <div class="form-group">
-                                             <input name="user_password" id="u_pass" value="<?php echo $user_password ?>" placeholder="กรอกรหัสผ่าน" type="password" class="form-control"> 
+                                             <input  required  name="user_password" id="u_pass" value="<?php echo $user_password ?>" placeholder="กรอกรหัสผ่าน" type="password" class="form-control"> 
                                             </div>
                                         </div>
                                     </div>
 									<div class="row">
                                         <div class="form-group col-md-12">
-                                            <label class="control-label"> กรอกรหัสผ่านอีกครั้ง </label>
+                                            <label  required  class="control-label"> กรอกรหัสผ่านอีกครั้ง </label>
                                             <div class="form-group">
                                              <input name="user_password2" id="u_pass2" value="<?php echo $user_password ?>" placeholder="กรอกรหัสผ่านอีกครั้ง" type="password" class="form-control"> 
                                             </div>
