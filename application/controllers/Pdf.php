@@ -83,7 +83,7 @@ class pdf extends CI_Controller {
 					<p style=\"font-family: garuda\">".$query[0]->durable_code."</p>
 					<br><img width=\"30%\" src=".base_url('uploads/qr_image/'.$qr_image)." alt=\"QRCode Image\">
 					</td>";	
-		$content .="</tr>
+		$content .="</tr> 
 			</table>
 				</div>
 			</div>
