@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2019 at 03:46 PM
+-- Generation Time: Apr 04, 2019 at 11:36 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `durable_management_system`
 --
-CREATE DATABASE IF NOT EXISTS `durable_management_system` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `durable_management_system`;
 
 -- --------------------------------------------------------
 
@@ -30,20 +28,15 @@ USE `durable_management_system`;
 -- Table structure for table `borrows`
 --
 
-DROP TABLE IF EXISTS `borrows`;
-CREATE TABLE IF NOT EXISTS `borrows` (
-  `borrow_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `borrows` (
+  `borrow_id` int(11) NOT NULL,
   `durable_id` int(11) NOT NULL,
   `borrow_date` datetime DEFAULT NULL,
   `due_date` date NOT NULL,
   `return_date` datetime DEFAULT NULL,
   `borrow_status_id` int(11) NOT NULL,
-  `users_user_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`borrow_id`),
-  KEY `fk_borrows_durable_article1_idx` (`durable_id`),
-  KEY `fk_borrows_borrow_status1_idx` (`borrow_status_id`),
-  KEY `fk_borrows_users1_idx` (`users_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+  `users_user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `borrows`
@@ -62,7 +55,6 @@ INSERT INTO `borrows` (`borrow_id`, `durable_id`, `borrow_date`, `due_date`, `re
 --
 -- Triggers `borrows`
 --
-DROP TRIGGER IF EXISTS `add_date_borrow`;
 DELIMITER $$
 CREATE TRIGGER `add_date_borrow` BEFORE INSERT ON `borrows` FOR EACH ROW BEGIN
 	IF (NEW.borrow_date IS NULL) THEN
@@ -71,7 +63,6 @@ CREATE TRIGGER `add_date_borrow` BEFORE INSERT ON `borrows` FOR EACH ROW BEGIN
  END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `update_borrow`;
 DELIMITER $$
 CREATE TRIGGER `update_borrow` BEFORE UPDATE ON `borrows` FOR EACH ROW BEGIN
 	IF (NEW.return_date IS NULL) THEN
@@ -87,8 +78,7 @@ DELIMITER ;
 -- Table structure for table `borrow_detail`
 --
 
-DROP TABLE IF EXISTS `borrow_detail`;
-CREATE TABLE IF NOT EXISTS `borrow_detail` (
+CREATE TABLE `borrow_detail` (
   `borrow_detail_id` int(11) NOT NULL,
   `borrow_id` int(11) NOT NULL,
   `durable_id` int(11) NOT NULL,
@@ -101,12 +91,10 @@ CREATE TABLE IF NOT EXISTS `borrow_detail` (
 -- Table structure for table `borrow_status`
 --
 
-DROP TABLE IF EXISTS `borrow_status`;
-CREATE TABLE IF NOT EXISTS `borrow_status` (
-  `borrow_status_id` int(11) NOT NULL AUTO_INCREMENT,
-  `borrow_status_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`borrow_status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `borrow_status` (
+  `borrow_status_id` int(11) NOT NULL,
+  `borrow_status_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `borrow_status`
@@ -122,14 +110,11 @@ INSERT INTO `borrow_status` (`borrow_status_id`, `borrow_status_name`) VALUES
 -- Table structure for table `buildings`
 --
 
-DROP TABLE IF EXISTS `buildings`;
-CREATE TABLE IF NOT EXISTS `buildings` (
-  `building_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `buildings` (
+  `building_id` int(11) NOT NULL,
   `building_name` varchar(255) NOT NULL,
-  `campus_id` int(11) NOT NULL,
-  PRIMARY KEY (`building_id`),
-  KEY `fk_buildings_campus1_idx` (`campus_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `campus_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `buildings`
@@ -144,12 +129,10 @@ INSERT INTO `buildings` (`building_id`, `building_name`, `campus_id`) VALUES
 -- Table structure for table `campus`
 --
 
-DROP TABLE IF EXISTS `campus`;
-CREATE TABLE IF NOT EXISTS `campus` (
-  `campus_id` int(11) NOT NULL AUTO_INCREMENT,
-  `campus_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`campus_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `campus` (
+  `campus_id` int(11) NOT NULL,
+  `campus_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `campus`
@@ -164,13 +147,11 @@ INSERT INTO `campus` (`campus_id`, `campus_name`) VALUES
 -- Table structure for table `category`
 --
 
-DROP TABLE IF EXISTS `category`;
-CREATE TABLE IF NOT EXISTS `category` (
-  `cat_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `category` (
+  `cat_id` int(11) NOT NULL,
   `cat_name` varchar(255) NOT NULL,
-  `durable_age` int(11) NOT NULL,
-  PRIMARY KEY (`cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+  `durable_age` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `category`
@@ -195,14 +176,11 @@ INSERT INTO `category` (`cat_id`, `cat_name`, `durable_age`) VALUES
 -- Table structure for table `course`
 --
 
-DROP TABLE IF EXISTS `course`;
-CREATE TABLE IF NOT EXISTS `course` (
-  `course_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `course` (
+  `course_id` int(11) NOT NULL,
   `course_name` varchar(255) NOT NULL,
-  `major_id` int(11) NOT NULL,
-  PRIMARY KEY (`course_id`),
-  KEY `major_id` (`major_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `major_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `course`
@@ -218,9 +196,8 @@ INSERT INTO `course` (`course_id`, `course_name`, `major_id`) VALUES
 -- Table structure for table `durable_article`
 --
 
-DROP TABLE IF EXISTS `durable_article`;
-CREATE TABLE IF NOT EXISTS `durable_article` (
-  `durable_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `durable_article` (
+  `durable_id` int(11) NOT NULL,
   `durable_code` varchar(255) NOT NULL,
   `durable_name` varchar(255) DEFAULT NULL,
   `use_date` date DEFAULT NULL,
@@ -237,17 +214,8 @@ CREATE TABLE IF NOT EXISTS `durable_article` (
   `durable_age` int(11) DEFAULT NULL,
   `scrap_value` double DEFAULT NULL,
   `can_borrow` char(1) DEFAULT NULL,
-  `borrow_status` int(11) NOT NULL,
-  PRIMARY KEY (`durable_id`),
-  UNIQUE KEY `durable_code_UNIQUE` (`durable_code`),
-  KEY `fk_durable_article_durable_status_idx` (`durable_status_id`),
-  KEY `fk_durable_article_users1_idx` (`user_id`),
-  KEY `fk_durable_article_category1_idx` (`cat_id`),
-  KEY `fk_durable_article_rooms1_idx` (`room_id`),
-  KEY `borrow_status` (`borrow_status`),
-  KEY `major_id` (`major_id`),
-  KEY `course_id` (`course_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+  `borrow_status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `durable_article`
@@ -270,7 +238,6 @@ INSERT INTO `durable_article` (`durable_id`, `durable_code`, `durable_name`, `us
 --
 -- Triggers `durable_article`
 --
-DROP TRIGGER IF EXISTS `durable_add_date`;
 DELIMITER $$
 CREATE TRIGGER `durable_add_date` BEFORE INSERT ON `durable_article` FOR EACH ROW BEGIN
 	IF (NEW.add_date IS NULL) THEN
@@ -286,12 +253,10 @@ DELIMITER ;
 -- Table structure for table `durable_status`
 --
 
-DROP TABLE IF EXISTS `durable_status`;
-CREATE TABLE IF NOT EXISTS `durable_status` (
-  `durable_status_id` int(11) NOT NULL AUTO_INCREMENT,
-  `durable_status_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`durable_status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+CREATE TABLE `durable_status` (
+  `durable_status_id` int(11) NOT NULL,
+  `durable_status_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `durable_status`
@@ -308,12 +273,10 @@ INSERT INTO `durable_status` (`durable_status_id`, `durable_status_name`) VALUES
 -- Table structure for table `faculties`
 --
 
-DROP TABLE IF EXISTS `faculties`;
-CREATE TABLE IF NOT EXISTS `faculties` (
-  `faculty_id` int(11) NOT NULL AUTO_INCREMENT,
-  `faculty_name` varchar(45) NOT NULL,
-  PRIMARY KEY (`faculty_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `faculties` (
+  `faculty_id` int(11) NOT NULL,
+  `faculty_name` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `faculties`
@@ -328,23 +291,17 @@ INSERT INTO `faculties` (`faculty_id`, `faculty_name`) VALUES
 -- Table structure for table `identify_log`
 --
 
-DROP TABLE IF EXISTS `identify_log`;
-CREATE TABLE IF NOT EXISTS `identify_log` (
-  `identify_log_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `identify_log` (
+  `identify_log_id` int(11) NOT NULL,
   `durable_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `identify_datetime` datetime NOT NULL,
-  `identify_status_id` int(11) NOT NULL,
-  PRIMARY KEY (`identify_log_id`),
-  KEY `durable_id` (`durable_id`),
-  KEY `user_id` (`user_id`),
-  KEY `identify_status_id` (`identify_status_id`)
+  `identify_status_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Triggers `identify_log`
 --
-DROP TRIGGER IF EXISTS `identify_datetime`;
 DELIMITER $$
 CREATE TRIGGER `identify_datetime` BEFORE INSERT ON `identify_log` FOR EACH ROW BEGIN
 	IF (NEW.identify_datetime IS NULL) THEN
@@ -360,11 +317,9 @@ DELIMITER ;
 -- Table structure for table `identify_status`
 --
 
-DROP TABLE IF EXISTS `identify_status`;
-CREATE TABLE IF NOT EXISTS `identify_status` (
-  `identify_status_id` int(11) NOT NULL AUTO_INCREMENT,
-  `identify_status_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`identify_status_id`)
+CREATE TABLE `identify_status` (
+  `identify_status_id` int(11) NOT NULL,
+  `identify_status_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -373,14 +328,11 @@ CREATE TABLE IF NOT EXISTS `identify_status` (
 -- Table structure for table `majors`
 --
 
-DROP TABLE IF EXISTS `majors`;
-CREATE TABLE IF NOT EXISTS `majors` (
-  `major_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `majors` (
+  `major_id` int(11) NOT NULL,
   `major_name` varchar(45) DEFAULT NULL,
-  `faculty_id` int(11) NOT NULL,
-  PRIMARY KEY (`major_id`),
-  KEY `fk_sub_departments_departments1_idx` (`faculty_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `faculty_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `majors`
@@ -395,9 +347,8 @@ INSERT INTO `majors` (`major_id`, `major_name`, `faculty_id`) VALUES
 -- Table structure for table `problem_report`
 --
 
-DROP TABLE IF EXISTS `problem_report`;
-CREATE TABLE IF NOT EXISTS `problem_report` (
-  `problem_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `problem_report` (
+  `problem_id` int(11) NOT NULL,
   `problem_topic` varchar(255) NOT NULL,
   `problem_detail` longtext,
   `durable_id` int(11) NOT NULL,
@@ -405,11 +356,8 @@ CREATE TABLE IF NOT EXISTS `problem_report` (
   `report_datetime` datetime DEFAULT NULL,
   `reporter_id` varchar(45) DEFAULT NULL,
   `reporter_name` varchar(45) DEFAULT NULL,
-  `reporter_surname` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`problem_id`),
-  KEY `fk_problem_report_durable_article1_idx` (`durable_id`),
-  KEY `fk_problem_report_problem_status1_idx` (`problem_status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+  `reporter_surname` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `problem_report`
@@ -424,7 +372,6 @@ INSERT INTO `problem_report` (`problem_id`, `problem_topic`, `problem_detail`, `
 --
 -- Triggers `problem_report`
 --
-DROP TRIGGER IF EXISTS `report_add_time`;
 DELIMITER $$
 CREATE TRIGGER `report_add_time` BEFORE INSERT ON `problem_report` FOR EACH ROW BEGIN
 	IF (NEW.report_datetime IS NULL) THEN
@@ -440,12 +387,10 @@ DELIMITER ;
 -- Table structure for table `problem_status`
 --
 
-DROP TABLE IF EXISTS `problem_status`;
-CREATE TABLE IF NOT EXISTS `problem_status` (
-  `problem_status_id` int(11) NOT NULL AUTO_INCREMENT,
-  `problem_status_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`problem_status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+CREATE TABLE `problem_status` (
+  `problem_status_id` int(11) NOT NULL,
+  `problem_status_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `problem_status`
@@ -464,14 +409,11 @@ INSERT INTO `problem_status` (`problem_status_id`, `problem_status_name`) VALUES
 -- Table structure for table `rooms`
 --
 
-DROP TABLE IF EXISTS `rooms`;
-CREATE TABLE IF NOT EXISTS `rooms` (
-  `room_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `rooms` (
+  `room_id` int(11) NOT NULL,
   `room_name` varchar(255) DEFAULT NULL,
-  `building_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`room_id`),
-  KEY `fk_rooms_buildings1_idx` (`building_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `building_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `rooms`
@@ -487,12 +429,10 @@ INSERT INTO `rooms` (`room_id`, `room_name`, `building_id`) VALUES
 -- Table structure for table `sysconfig`
 --
 
-DROP TABLE IF EXISTS `sysconfig`;
-CREATE TABLE IF NOT EXISTS `sysconfig` (
+CREATE TABLE `sysconfig` (
   `syscode` char(3) NOT NULL COMMENT 'รหัส',
   `sysvalue` varchar(255) DEFAULT NULL COMMENT 'ค่า',
-  `sysdesc` varchar(255) DEFAULT NULL COMMENT 'ราย',
-  PRIMARY KEY (`syscode`)
+  `sysdesc` varchar(255) DEFAULT NULL COMMENT 'ราย'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -523,11 +463,9 @@ INSERT INTO `sysconfig` (`syscode`, `sysvalue`, `sysdesc`) VALUES
 -- Table structure for table `type_user`
 --
 
-DROP TABLE IF EXISTS `type_user`;
-CREATE TABLE IF NOT EXISTS `type_user` (
+CREATE TABLE `type_user` (
   `type_user_id` char(1) NOT NULL,
-  `type_user_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`type_user_id`)
+  `type_user_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -544,14 +482,11 @@ INSERT INTO `type_user` (`type_user_id`, `type_user_name`) VALUES
 -- Table structure for table `usage_log`
 --
 
-DROP TABLE IF EXISTS `usage_log`;
-CREATE TABLE IF NOT EXISTS `usage_log` (
-  `usage_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `usage_log` (
+  `usage_id` int(11) NOT NULL,
   `durable_id` int(11) NOT NULL,
-  `usage_datetime` datetime DEFAULT NULL,
-  PRIMARY KEY (`usage_id`),
-  KEY `fk_usage_log_durable_article1_idx` (`durable_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  `usage_datetime` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `usage_log`
@@ -572,7 +507,6 @@ INSERT INTO `usage_log` (`usage_id`, `durable_id`, `usage_datetime`) VALUES
 --
 -- Triggers `usage_log`
 --
-DROP TRIGGER IF EXISTS `add_time_to_usagelog`;
 DELIMITER $$
 CREATE TRIGGER `add_time_to_usagelog` BEFORE INSERT ON `usage_log` FOR EACH ROW BEGIN
 	IF (NEW.usage_datetime IS NULL) THEN
@@ -588,9 +522,8 @@ DELIMITER ;
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
   `user_name` varchar(255) DEFAULT NULL,
   `user_surname` varchar(255) DEFAULT NULL,
   `user_email` varchar(255) NOT NULL,
@@ -599,12 +532,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `type_user_id` char(1) DEFAULT NULL,
   `register_date` datetime DEFAULT NULL,
   `major_id` int(11) NOT NULL,
-  `user_token` char(40) DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `user_email_UNIQUE` (`user_email`),
-  KEY `fk_users_type_user1_idx` (`type_user_id`),
-  KEY `fk_users_sub_departments1_idx` (`major_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `user_token` char(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
@@ -614,12 +543,12 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_surname`, `user_email`, `user
 (1, 'กฤติกาล', 'วีระกะลัส', 'krit@mail.com', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 'Y', 'A', '2018-09-12 00:00:00', 1, NULL),
 (2, 'Krittikarn', 'Verakalas', 'krittikarn@mail.com', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 'Y', 'U', '2018-09-13 00:00:00', 1, NULL),
 (3, 'Krittikarn3', 'Verakalas', 'vkrittikarn@mail.com', '2e19c8dbe45c3fabb7a018296e196e9705e40c46', 'Y', 'U', '2019-01-20 12:44:16', 1, 'N0ngPuE4AUNGPAlPSQSq00MjhFMsrOYgsW0DRuuU'),
-(4, 'Krittikarn2', 'Verakalas2', 'vkrittikarn@gmail.com', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 'Y', 'U', '2019-02-18 11:37:06', 1, 'qkgzhfvs3g6Su4kshedveUk9Z2HOQcBTpgcddrMg');
+(4, 'Krittikarn2', 'Verakalas2', 'vkrittikarn@gmail.com', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 'Y', 'U', '2019-02-18 11:37:06', 1, 'qkgzhfvs3g6Su4kshedveUk9Z2HOQcBTpgcddrMg'),
+(6, 'dsafdfs', 'sfdafsdfs', 'v_Krittikarn@hotmail.com', NULL, 'N', 'U', '2019-04-04 16:06:55', 1, 'XuWDztqkz5R4bekKc5Atazp7yC3tNy3Qf3AoR7o4');
 
 --
 -- Triggers `users`
 --
-DROP TRIGGER IF EXISTS `add_register_date_users`;
 DELIMITER $$
 CREATE TRIGGER `add_register_date_users` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
 	IF (NEW.register_date IS NULL) THEN
@@ -628,6 +557,254 @@ CREATE TRIGGER `add_register_date_users` BEFORE INSERT ON `users` FOR EACH ROW B
  END
 $$
 DELIMITER ;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `borrows`
+--
+ALTER TABLE `borrows`
+  ADD PRIMARY KEY (`borrow_id`),
+  ADD KEY `fk_borrows_durable_article1_idx` (`durable_id`),
+  ADD KEY `fk_borrows_borrow_status1_idx` (`borrow_status_id`),
+  ADD KEY `fk_borrows_users1_idx` (`users_user_id`);
+
+--
+-- Indexes for table `borrow_status`
+--
+ALTER TABLE `borrow_status`
+  ADD PRIMARY KEY (`borrow_status_id`);
+
+--
+-- Indexes for table `buildings`
+--
+ALTER TABLE `buildings`
+  ADD PRIMARY KEY (`building_id`),
+  ADD KEY `fk_buildings_campus1_idx` (`campus_id`);
+
+--
+-- Indexes for table `campus`
+--
+ALTER TABLE `campus`
+  ADD PRIMARY KEY (`campus_id`);
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`cat_id`);
+
+--
+-- Indexes for table `course`
+--
+ALTER TABLE `course`
+  ADD PRIMARY KEY (`course_id`),
+  ADD KEY `major_id` (`major_id`);
+
+--
+-- Indexes for table `durable_article`
+--
+ALTER TABLE `durable_article`
+  ADD PRIMARY KEY (`durable_id`),
+  ADD UNIQUE KEY `durable_code_UNIQUE` (`durable_code`),
+  ADD KEY `fk_durable_article_durable_status_idx` (`durable_status_id`),
+  ADD KEY `fk_durable_article_users1_idx` (`user_id`),
+  ADD KEY `fk_durable_article_category1_idx` (`cat_id`),
+  ADD KEY `fk_durable_article_rooms1_idx` (`room_id`),
+  ADD KEY `borrow_status` (`borrow_status`),
+  ADD KEY `major_id` (`major_id`),
+  ADD KEY `course_id` (`course_id`);
+
+--
+-- Indexes for table `durable_status`
+--
+ALTER TABLE `durable_status`
+  ADD PRIMARY KEY (`durable_status_id`);
+
+--
+-- Indexes for table `faculties`
+--
+ALTER TABLE `faculties`
+  ADD PRIMARY KEY (`faculty_id`);
+
+--
+-- Indexes for table `identify_log`
+--
+ALTER TABLE `identify_log`
+  ADD PRIMARY KEY (`identify_log_id`),
+  ADD KEY `durable_id` (`durable_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `identify_status_id` (`identify_status_id`);
+
+--
+-- Indexes for table `identify_status`
+--
+ALTER TABLE `identify_status`
+  ADD PRIMARY KEY (`identify_status_id`);
+
+--
+-- Indexes for table `majors`
+--
+ALTER TABLE `majors`
+  ADD PRIMARY KEY (`major_id`),
+  ADD KEY `fk_sub_departments_departments1_idx` (`faculty_id`);
+
+--
+-- Indexes for table `problem_report`
+--
+ALTER TABLE `problem_report`
+  ADD PRIMARY KEY (`problem_id`),
+  ADD KEY `fk_problem_report_durable_article1_idx` (`durable_id`),
+  ADD KEY `fk_problem_report_problem_status1_idx` (`problem_status_id`);
+
+--
+-- Indexes for table `problem_status`
+--
+ALTER TABLE `problem_status`
+  ADD PRIMARY KEY (`problem_status_id`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`room_id`),
+  ADD KEY `fk_rooms_buildings1_idx` (`building_id`);
+
+--
+-- Indexes for table `sysconfig`
+--
+ALTER TABLE `sysconfig`
+  ADD PRIMARY KEY (`syscode`);
+
+--
+-- Indexes for table `type_user`
+--
+ALTER TABLE `type_user`
+  ADD PRIMARY KEY (`type_user_id`);
+
+--
+-- Indexes for table `usage_log`
+--
+ALTER TABLE `usage_log`
+  ADD PRIMARY KEY (`usage_id`),
+  ADD KEY `fk_usage_log_durable_article1_idx` (`durable_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `user_email_UNIQUE` (`user_email`),
+  ADD KEY `fk_users_type_user1_idx` (`type_user_id`),
+  ADD KEY `fk_users_sub_departments1_idx` (`major_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `borrows`
+--
+ALTER TABLE `borrows`
+  MODIFY `borrow_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `borrow_status`
+--
+ALTER TABLE `borrow_status`
+  MODIFY `borrow_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `buildings`
+--
+ALTER TABLE `buildings`
+  MODIFY `building_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `campus`
+--
+ALTER TABLE `campus`
+  MODIFY `campus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `course`
+--
+ALTER TABLE `course`
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `durable_article`
+--
+ALTER TABLE `durable_article`
+  MODIFY `durable_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
+-- AUTO_INCREMENT for table `durable_status`
+--
+ALTER TABLE `durable_status`
+  MODIFY `durable_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `faculties`
+--
+ALTER TABLE `faculties`
+  MODIFY `faculty_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `identify_log`
+--
+ALTER TABLE `identify_log`
+  MODIFY `identify_log_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `identify_status`
+--
+ALTER TABLE `identify_status`
+  MODIFY `identify_status_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `majors`
+--
+ALTER TABLE `majors`
+  MODIFY `major_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `problem_report`
+--
+ALTER TABLE `problem_report`
+  MODIFY `problem_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `problem_status`
+--
+ALTER TABLE `problem_status`
+  MODIFY `problem_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `usage_log`
+--
+ALTER TABLE `usage_log`
+  MODIFY `usage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables

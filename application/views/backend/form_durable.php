@@ -12,6 +12,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label class="control-label">เลขครุภัณฑ์</label>
+                                            <input type="hidden" name="user_id" value="<?php echo $query_user; ?>" >
                                             <input required name="durable_code" value="<?php echo $durable_code; ?>" placeholder="เลขครุภัณฑ์" type="text" class="form-control"> 
                                         </div>
                                         <div class="form-group col-md-6">
@@ -59,23 +60,76 @@
                                             
                                             </div>
                                         <div class="form-group col-md-6">
-                                            <label class="control-label">ผู้ดูแลครุภัณฑ์</label>
-                                            <div class="form-group">
-                                            <select name="user_id" class="form-control">
-                                                <option value=""><?php echo "--ผู้ดูแลครุภัณฑ์--"; ?></option>
-                                            <?php 
-                                            foreach($query_user as $r_user) 
-                                            {
-                                                if($user_id == $r_user){
-                                                    echo "<option value=\"".$r_user->user_id."\" selected>".$r_user->user_id." ".$r_user->user_name."</option>";
-                                                }else{
-                                                    echo "<option value=\"".$r_user->user_id."\">".$r_user->user_id." ".$r_user->user_name."</option>";
-                                                }
-                                                
-                                            }
-                                            ?>
-                                            </select>
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="control-label">คณะ</label>
+                                                    <div class="form-group">
+                                                    <select name="faculty_id" class="form-control">
+                                                        <option value=""><?php echo "--ผู้ดูแลครุภัณฑ์--"; ?></option>
+                                                    <?php 
+                                                    foreach($query_user as $r_user) 
+                                                    {
+                                                        if($user_id == $r_user){
+                                                            echo "<option value=\"".$r_user->user_id."\" selected>".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }else{
+                                                            echo "<option value=\"".$r_user->user_id."\">".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }
+                                                        
+                                                    }
+                                                    ?>
+                                                    </select>
+                                                    </div>
+
+                                                </div>
                                             </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="control-label">สาขา</label>
+                                                    <div class="form-group">
+                                                    <select name="major_id" class="form-control">
+                                                        <option value=""><?php echo "--ผู้ดูแลครุภัณฑ์--"; ?></option>
+                                                    <?php 
+                                                    foreach($query_user as $r_user) 
+                                                    {
+                                                        if($user_id == $r_user){
+                                                            echo "<option value=\"".$r_user->user_id."\" selected>".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }else{
+                                                            echo "<option value=\"".$r_user->user_id."\">".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }
+                                                        
+                                                    }
+                                                    ?>
+                                                    </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="control-label">หลักสูตร</label>
+                                                    <div class="form-group">
+                                                    <select name="course_id" class="form-control">
+                                                        <option value=""><?php echo "--ผู้ดูแลครุภัณฑ์--"; ?></option>
+                                                    <?php 
+                                                    foreach($query_user as $r_user) 
+                                                    {
+                                                        if($user_id == $r_user){
+                                                            echo "<option value=\"".$r_user->user_id."\" selected>".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }else{
+                                                            echo "<option value=\"".$r_user->user_id."\">".$r_user->user_id." ".$r_user->user_name."</option>";
+                                                        }
+                                                        
+                                                    }
+                                                    ?>
+                                                    </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                     </div>
                                     <div class="row">

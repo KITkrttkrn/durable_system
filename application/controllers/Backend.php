@@ -219,7 +219,6 @@ class Backend extends CI_Controller {
 			$this->load->view('main',$data); 
 		}else{
 				$query_cat = $this->durable_model->get_cat();
-				$query_user = $this->durable_model->get_user();
 				$query_room = $this->durable_model->get_room();
 				$query_durable_status = $this->durable_model->get_durable_status();
 
@@ -246,7 +245,7 @@ class Backend extends CI_Controller {
 					'durable_id' => "",
 					'can_borrow' => "",
 					'query_cat' => $query_cat,
-					'query_user' => $query_user,
+					'query_user' => $_SESSION['uid'],
 					'query_room' => $query_room,
 					'query_durable_status' => $query_durable_status,
 
