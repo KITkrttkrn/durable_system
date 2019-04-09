@@ -17,22 +17,45 @@ class Ajax extends CI_Controller {
 
 	public function get_major_id()
 	{
-        if(isset($_GET["pro_id"]) && !empty($_GET["pro_id"])){
+        if(isset($_GET["fac_id"]) && !empty($_GET["fac_id"])){
             //Get all state data
-            $major_id = $this->input->get('pro_id');
-            $query = $this->user_model->get_major_id($major_id);
+            $fac_id = $this->input->get('fac_id');
+            $query = $this->user_model->get_major_id($fac_id);
             
             //Count total number of rows
             $rowCount = count($query);
             
             //Display district list
             if($rowCount > 0){
-                echo '<option value="">----สาขา---</option>';
+                echo '<option value="">---สาขา---</option>';
                 foreach($query as $r){ 
                     echo '<option value="'.$r->major_id.'">'.$r->major_name.'</option>';
                 }
             }else{
-                echo '<option value="">State not available</option>';
+                echo '<option value="">สาขา</option>';
+            }
+        }
+        
+    }
+
+    public function get_course_id()
+	{
+        if(isset($_GET["major_id"]) && !empty($_GET["major_id"])){
+            //Get all state data
+            $major_id = $this->input->get('major_id');
+            $query = $this->user_model->get_course_id($major_id);
+            
+            //Count total number of rows
+            $rowCount = count($query);
+            
+            //Display district list
+            if($rowCount > 0){
+                echo '<option value="">---หลักสูตร---</option>';
+                foreach($query as $r){ 
+                    echo '<option value="'.$r->course_id.'">'.$r->course_name.'</option>';
+                }
+            }else{
+                echo '<option value="">ไม่มีหลักสูตร</option>';
             }
         }
         
@@ -50,12 +73,12 @@ class Ajax extends CI_Controller {
             
             //Display district list
             if($rowCount > 0){
-                echo '<option value="0">----อาคาร---</option>';
+                echo '<option value="0">---อาคาร---</option>';
                 foreach($query as $r){ 
                     echo '<option value="'.$r->building_id.'">'.$r->building_name.'</option>';
                 }
             }else{
-                echo '<option value="">State not available</option>';
+                echo '<option value="">ไม่มีอาคาร</option>';
             }
         }
         
@@ -73,12 +96,12 @@ class Ajax extends CI_Controller {
             
             //Display district list
             if($rowCount > 0){
-                echo '<option value="0">----ห้อง---</option>';
+                echo '<option value="0">---ห้อง---</option>';
                 foreach($query as $r){ 
                     echo '<option value="'.$r->room_id.'">'.$r->room_name.'</option>';
                 }
             }else{
-                echo '<option value="">State not available</option>';
+                echo '<option value="">ไม่มีห้อง</option>';
             }
         }
         

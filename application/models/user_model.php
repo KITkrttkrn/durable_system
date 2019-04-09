@@ -87,6 +87,14 @@ class user_model extends CI_Model {
         return $query->result();
     }
 
+    function get_course_id($id)
+    {
+        $sql = "SELECT * FROM course WHERE major_id = ".$id.";";
+        // print_r($sql);
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
     function get_building_id($id)
     {
         $sql = "SELECT * FROM buildings WHERE campus_id = ".$id.";";

@@ -80,8 +80,10 @@ $route['profile_detail/(:num)'] = 'backend/profile_detail/$1';
 
 $route['insert_durable'] = 'backend/form_durable';
 $route['edit_durable/(:num)'] = 'backend/form_durable/$1';
+$route['delete_durable/(:num)'] = 'backend/delete_durable/$1';
 $route['save_durable'] = 'backend/save_durable';
 $route['form_qr_by_room'] = 'backend/form_qr_by_room';
+
 
 
 //User Controller
@@ -96,6 +98,7 @@ $route['process_user_detail'] = 'user/process_user_detail';
 
 //Ajax Controller
 $route['get_major_id'] = 'ajax/get_major_id';
+$route['get_course_id'] = 'ajax/get_course_id';
 $route['get_building_id'] = 'ajax/get_building_id';
 $route['get_room_id'] = 'ajax/get_room_id';
 
@@ -123,3 +126,39 @@ $route['add_cat'] = 'admin/add_cat/';
 $route['edit_cat/(:num)'] = 'admin/edit_cat/$1';
 $route['process_cat'] = 'admin/process_cat';
 $route['delete_cat/(:num)'] = 'admin/delete_cat/$1';
+
+$route['manage_faculty'] = 'admin/manage_faculty';
+$route['add_faculty'] = 'admin/add_faculty/';
+$route['edit_faculty/(:num)'] = 'admin/edit_faculty/$1';
+$route['process_faculty'] = 'admin/process_faculty';
+$route['delete_faculty/(:num)'] = 'admin/delete_faculty/$1';
+
+$route['manage_major'] = 'admin/manage_major';
+$route['add_major'] = 'admin/add_major/';
+$route['edit_major/(:num)'] = 'admin/edit_major/$1';
+$route['process_major'] = 'admin/process_major';
+$route['delete_major/(:num)'] = 'admin/delete_major/$1';
+
+$route['manage_course'] = 'admin/manage_course';
+$route['add_course'] = 'admin/add_course/';
+$route['edit_course/(:num)'] = 'admin/edit_course/$1';
+$route['process_course'] = 'admin/process_course';
+$route['delete_course/(:num)'] = 'admin/delete_course/$1';
+
+$route['manage_campus'] = 'admin/manage_campus';
+$route['add_campus'] = 'admin/add_campus/';
+$route['edit_campus/(:num)'] = 'admin/edit_campus/$1';
+$route['process_campus'] = 'admin/process_campus';
+$route['delete_campus/(:num)'] = 'admin/delete_campus/$1';
+
+$route['manage_building'] = 'admin/manage_building';
+$route['add_building'] = 'admin/add_building/';
+$route['edit_building/(:num)'] = 'admin/edit_building/$1';
+$route['process_building'] = 'admin/process_building';
+$route['delete_building/(:num)'] = 'admin/delete_building/$1';
+
+$route['manage_room'] = 'admin/manage_room';
+$route['add_room'] = 'admin/add_room/';
+$route['edit_room/(:num)'] = 'admin/edit_room/$1';
+$route['process_room'] = 'admin/process_room';
+$route['delete_room/(:num)'] = 'admin/delete_room/$1';

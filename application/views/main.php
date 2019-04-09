@@ -65,19 +65,14 @@
                     <div class="sidebar-container">
                         <div class="sidebar-header">
                             <div class="brand">
-                                <div class="logo">
-                                    <span class="l l1"></span>
-                                    <span class="l l2"></span>
-                                    <span class="l l3"></span>
-                                    <span class="l l4"></span>
-                                    <span class="l l5"></span>
-                                </div> <?php echo "D.A.M System"; ?> </div>
+                                <?php echo $sysname; ?>
+                            </div>
                         </div>
                         <nav class="menu">
                             <ul class="sidebar-menu metismenu" id="sidebar-menu">
                                 <li <?php if($menu == 'dashboard'){ echo "class=\"active\""; } ?>>
                                     <a href="<?= site_url('dashboard'); ?>">
-                                        <i class="fa fa-home"></i> Dashboard </a>
+                                        <i class="fa fa-home"></i> หน้าแรก </a>
                                 </li>
                                 <li <?php if($menu == 'insert_durable' OR $menu == 'manage_durable' OR $menu == 'manage_depreciation' OR $menu == 'form_qr_by_room'){ echo "class=\"active\""; } ?>>
                                     <a href="">
@@ -124,7 +119,7 @@
                                 </li>
 
                                 <?php if(isset($_SESSION['login_true_sysadmin'])){ ?>
-                                <li <?php if($menu == 'form_users' OR $menu == 'manage_users'){ echo "class=\"active\""; } ?>>
+                                <li <?php if($menu == 'form_users' OR $menu == 'manage_users' OR $menu == 'edit_users' OR $menu == 'insert_users'){ echo "class=\"active\""; } ?>>
                                     <a href="">
                                         <!-- <i class="fa fa-area-chart"> --></i> ผู้ใช้งาน
                                         <i class="fa arrow"></i>
@@ -139,9 +134,9 @@
                                     </ul>
                                 </li>
 
-                                <li <?php if($menu == 'setting_name' OR $menu == 'setting_line' OR $menu == 'setting_mail' OR $menu == 'manage_cat'){ echo "class=\"active\""; } ?>>
+                                <li <?php if($menu == 'setting_name' OR $menu == 'setting_line' OR $menu == 'setting_mail' OR $menu == 'manage_cat' OR $menu == 'manage_faculty' OR $menu == 'manage_major' OR $menu == 'manage_course' OR $menu == 'manage_campus' OR $menu == 'manage_building' OR $menu == 'manage_room'){ echo "class=\"active\""; } ?>>
                                     <a href="">
-                                        <!-- <i class="fa fa-area-chart"> --></i> ตั้งค่า
+                                        <!-- <i class="fa fa-area-chart"> --></i> ตั้งค่าระบบ
                                         <i class="fa arrow"></i>
                                     </a>
                                     <ul class="sidebar-nav">
@@ -161,9 +156,42 @@
                                     </ul>
                                     <ul class="sidebar-nav">
                                         <li <?php if($menu == 'manage_cat'){ echo "class=\"active\""; } ?>>
-                                            <a href="<?= site_url('manage_cat'); ?>"> ตั้งค่า ประเภทของครุภัณฑ์</a>
+                                            <a href="<?= site_url('manage_cat'); ?>"> จัดการ ประเภทของครุภัณฑ์</a>
                                         </li>
                                     </ul>
+
+                                    <ul class="sidebar-nav">
+                                        <li <?php if($menu == 'manage_faculty'){ echo "class=\"active\""; } ?>>
+                                            <a href="<?= site_url('manage_faculty'); ?>"> จัดการ คณะ</a>
+                                        </li>
+                                    </ul>
+                                    <ul class="sidebar-nav">
+                                        <li <?php if($menu == 'manage_major'){ echo "class=\"active\""; } ?>>
+                                            <a href="<?= site_url('manage_major'); ?>"> จัดการ สาขา</a>
+                                        </li>
+                                    </ul>
+                                    <ul class="sidebar-nav">
+                                        <li <?php if($menu == 'manage_course'){ echo "class=\"active\""; } ?>>
+                                            <a href="<?= site_url('manage_course'); ?>"> จัดการ หลักสูตร</a>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="sidebar-nav">
+                                        <li <?php if($menu == 'manage_campus'){ echo "class=\"active\""; } ?>>
+                                            <a href="<?= site_url('manage_campus'); ?>"> จัดการ ศูนย์การเรียน</a>
+                                        </li>
+                                    </ul>
+                                    <ul class="sidebar-nav">
+                                        <li <?php if($menu == 'manage_building'){ echo "class=\"active\""; } ?>>
+                                            <a href="<?= site_url('manage_building'); ?>"> จัดการ อาคาร</a>
+                                        </li>
+                                    </ul>
+                                    <ul class="sidebar-nav">
+                                        <li <?php if($menu == 'manage_room'){ echo "class=\"active\""; } ?>>
+                                            <a href="<?= site_url('manage_room'); ?>"> จัดการ ห้องเรียน</a>
+                                        </li>
+                                    </ul>
+
                                 </li>
                                 <?php } ?>
                             </ul>

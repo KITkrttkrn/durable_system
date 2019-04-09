@@ -127,7 +127,7 @@ $(document).ready(function(){
             $.ajax({
                 type:'GET',
                 url:'<?= site_url('get_major_id'); ?>',
-                data:'pro_id='+provinceID,
+                data:'fac_id='+provinceID,
                 success:function(html){
                     $('#majors').html(html);
                 }

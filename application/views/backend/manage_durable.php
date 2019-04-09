@@ -27,7 +27,13 @@
 	                <td><center><?php echo $i;?></center></td>
 	                <td><center><?php echo $r->durable_code;?></center></td>
 	                <td><center><?php echo $r->durable_name;?></center></td>
-	                <td><center><a href="<?php echo site_url('durable_detail/'.$r->durable_id); ;?>"><button class="btn btn-primary btn-sm">เรียกดู</button></a></center></td>
+	                <td><center><a class="btn btn-primary btn-sm" href="<?php echo site_url('durable_detail/'.$r->durable_id);?>">เรียกดู</a>
+					<?php if(isset($_SESSION['login_true_sysadmin'])){ ?>
+					<a class="btn btn-warning btn-sm" href="<?php echo site_url('edit_durable/'.$r->durable_id);?>">แก้ไข</a>
+					<a class="btn btn-danger btn-sm" href="<?php echo site_url('delete_durable/'.$r->durable_id);?>">ลบ</a>
+					<?php } ?>
+					</center>
+					</td>
 	                
             	</tr>
 			<?php 

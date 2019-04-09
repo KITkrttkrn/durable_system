@@ -2,7 +2,7 @@
                 <!-- Begin Content -->
                 <article class="content dashboard-page">
                     <div class="title-block">
-                        <h3 class="title"> รายการประเภทครุภัณฑ์ </h3> <!-- หัวหลัก -->
+                        <h3 class="title"> รายการศูนย์การเรียน </h3> <!-- หัวหลัก -->
                         <!-- <p class="title-description"> Grid elements </p> --> <!-- หัวรอง -->
                     </div>
 
@@ -13,7 +13,7 @@
                                     <div class="card-block">
 										<div class="row">
                             			<div class="col-md-12">
-										<a href="<?php echo site_url('add_cat/');?>" class="btn btn-primary">เพิ่มข้อมูล</a>
+										<a href="<?php echo site_url('add_campus/');?>" class="btn btn-primary">เพิ่มข้อมูล</a>
 										<br>
 										<br>
 										</div>
@@ -24,8 +24,7 @@
 												<thead>
 													<tr>
 														<th><center>ลำดับ</center></th>
-														<th><center>รายการประเภทครุภัณฑ์</center></th>
-														<th><center>อายุขัยครุภัณฑ์</center></th>
+														<th><center>รายการศูนย์การเรียน</center></th>
 														<th><center>จัดการ</center></th>
 													</tr>
 												</thead>
@@ -36,9 +35,8 @@
 										foreach ($query as $r) {?>               
 													<tr>
 														<td><center><?php echo $i ;?></center></td>
-														<td><center><?php echo $r->cat_name ;?></center></td>
-														<td><center><?php echo $r->durable_age ;?></center></td>
-														<td><center><a href="<?php echo site_url('edit_cat/'.$r->cat_id);?>" ><button class="btn btn-warning btn-sm">แก้ไข</button></a>&nbsp;<button onclick="chkConfirm(<?= $r->cat_id ?>)" class="btn btn-danger btn-sm">ลบ</button></center></td>
+														<td><center><?php echo $r->campus_name ;?></center></td>
+														<td><center><a href="<?php echo site_url('edit_campus/'.$r->campus_id);?>" ><button class="btn btn-warning btn-sm">แก้ไข</button></a>&nbsp;<button onclick="chkConfirm(<?= $r->campus_id ?>)" class="btn btn-danger btn-sm">ลบ</button></center></td>
 													</tr>
 												<?php 
 												$i++;
@@ -68,7 +66,7 @@
 		if(confirm('ยืนยันการลบข้อมูลนี้')==true)
 		{
 			
-			window.location = "<?= site_url('delete_cat/'); ?>"+e;
+			window.location = "<?= site_url('delete_campus/'); ?>"+e;
 
 		}
 	}

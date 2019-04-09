@@ -22,7 +22,7 @@
                                             
                                             <input type="hidden" name="viewname" value="setting_name">
                                             <input type="hidden" name="syscode" value="<?= $query[0]->syscode; ?>">
-                                            <input class="form-control" name="sysvalue" type="text">
+                                            <input class="form-control" name="sysvalue" type="text" value="<?= $query[0]->sysvalue; ?>">
                                         </div>
                                      </div>
                                      <br>

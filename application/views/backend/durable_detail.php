@@ -111,13 +111,13 @@
                                         </div>
                                         <section class="example">
                                             <div class="table-flip-scroll">
-                                                <table class="table table-striped table-bordered table-hover flip-content">
+                                                <table id="table_id" class="table table-striped table-bordered table-hover flip-content">
                                                     <thead class="flip-header">
                                                         <tr>
-                                                            <th>ลำดับ</th>
-                                                            <th>หัวข้อปัญหา</th>
-                                                            <th>สถานะของปัญหา</th>
-                                                            <th>เพิ่มเติม</th>
+                                                            <th class="text-center">ลำดับ</th>
+                                                            <th class="text-center">หัวข้อปัญหา</th>
+                                                            <th class="text-center">สถานะของปัญหา</th>
+                                                            <th class="text-center">เพิ่มเติม</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -127,10 +127,10 @@
                                          ?>
    
                                                         <tr class="odd gradeX">
-                                                            <td><?php echo $count_report; ?></td>
-                                                            <td><?php echo $reports->problem_topic; ?></td>
-                                                            <td><?php echo $reports->problem_status_name; ?></td>
-                                                            <td class="center"><a href="<?php echo site_url('report_detail/'.$reports->problem_id); ?>" class="btn btn-primary">เรียกดู</a></td>
+                                                            <td class="text-center"><?php echo $count_report; ?></td>
+                                                            <td class="text-center"><?php echo $reports->problem_topic; ?></td>
+                                                            <td class="text-center"><?php echo $reports->problem_status_name; ?></td>
+                                                            <td class="text-center"><a href="<?php echo site_url('report_detail/'.$reports->problem_id); ?>" class="btn btn-primary">เรียกดู</a></td>
                                                         </tr>
                                         <?php
                                         $count_report++;
@@ -165,7 +165,7 @@
                                     <div class="row">
                                     <br>
                                         <div class="col-md-12">
-                                            <a href="#" onclick="window.history.back();" class="btn btn-secondary">ย้อนกลับ</a>
+                                            <a href="<?= site_url('manage_durable'); ?>" class="btn btn-secondary">ย้อนกลับ</a>
                                         </div>
                                     </div>
                                 </div>
@@ -175,3 +175,8 @@
 
                 </article>
                 <!-- End Content -->
+                <script type="text/javascript">
+	$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>

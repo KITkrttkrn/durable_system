@@ -181,45 +181,53 @@ class Backend extends CI_Controller {
             $prom_form = "แก้ไขข้อมูลครุภัณฑ์";
             $o_id = $id;	
             
-            $result = $this->durable_model->get_durable_nojoin_by_id($o_id);
+			$result = $this->durable_model->get_durable_join_by_id($o_id);
+			// print_r($result);
 			$query_cat = $this->durable_model->get_cat();
-			$query_user = $this->durable_model->get_user();
 			$query_room = $this->durable_model->get_room();
 			$query_durable_status = $this->durable_model->get_durable_status();
-            foreach($result as $row) 
-            {
+			$query_faculties = $this->durable_model->get_faculties();
+			$query_majors = $this->durable_model->get_majors($result[0]->faculty_id);
+			$query_course = $this->durable_model->get_course($result[0]->major_id);
+			
+			
                 $data = array(
                     'sysname' => $sysname[0]->sysvalue,
                     'page' => 'backend/form_durable',
-                    'menu' => 'insert_durable',
+                    'menu' => 'edit_durable',
                     'prom_form' => $prom_form,
 					'mode' => 'U',
-					'durable_id' => $row->durable_id,
-					'durable_code' => $row->durable_code,
-					'durable_name' => $row->durable_name,
-					'use_date' => $row->use_date,
-					'cat_id' => $row->cat_id,
-					'picture_path' => $row->picture_path,
+					'durable_id' => $result[0]->durable_id,
+					'durable_code' => $result[0]->durable_code,
+					'durable_name' => $result[0]->durable_name,
+					'use_date' => $result[0]->use_date,
+					'cat_id' => $result[0]->cat_id,
+					'picture_path' => $result[0]->picture_path,
 					'img_path_img' => site_url('resources/durable/'),
-					'user_id' => $row->user_id,
-					'price' => $row->price,
-					'scrap_value' => $row->scrap_value,
-					'durable_age' => $row->durable_age,
-					'room_id' => $row->room_id,
-					'durable_status_id' => $row->durable_status_id,
-					'description' => $row->description,
-					'can_borrow' => $row->can_borrow,
+					'user_id' => $result[0]->user_id,
+					'price' => $result[0]->price,
+					'scrap_value' => $result[0]->scrap_value,
+					'durable_age' => $result[0]->durable_age,
+					'room_id' => $result[0]->room_id,
+					'durable_status_id' => $result[0]->durable_status_id,
+					'description' => $result[0]->description,
+					'can_borrow' => $result[0]->can_borrow,
+					'major_id' => $result[0]->major_id,
+					'course_id' => $result[0]->course_id,
+					'query_faculties' => $query_faculties,
+					'query_majors' => $query_majors,
+					'query_course' => $query_course,
 					'query_cat' => $query_cat,
-					'query_user' => $query_user,
+					'query_user' => $_SESSION['uid'],
 					'query_room' => $query_room,
 					'query_durable_status' => $query_durable_status,
+					'result' => $result,
                 );
-                
-            }  
 			$this->load->view('main',$data); 
 		}else{
 				$query_cat = $this->durable_model->get_cat();
 				$query_room = $this->durable_model->get_room();
+				$query_faculties = $this->durable_model->get_faculties();
 				$query_durable_status = $this->durable_model->get_durable_status();
 
 				$prom_form ="ลงทะเบียนครุภัณฑ์";
@@ -247,6 +255,7 @@ class Backend extends CI_Controller {
 					'query_cat' => $query_cat,
 					'query_user' => $_SESSION['uid'],
 					'query_room' => $query_room,
+					'query_faculties' => $query_faculties,
 					'query_durable_status' => $query_durable_status,
 
 				);  
@@ -256,19 +265,25 @@ class Backend extends CI_Controller {
 
 	public function save_durable()
 	{
+		$file_name = 'durable_';
+		$file_name .= date("Ymd_His");
+		$file_name .= '.jpg';
+
 		if($_FILES['com_img']){
+			$config['file_name']			= $file_name;
 			$config['upload_path']          = '.\resources\durable';
 			$config['allowed_types']        = 'jpg|jpeg|png|PNG|JPG|JPEG';
 			$config['max_size']             = 6000;
-			$config['encrypt_name']         = TRUE;
+			$config['encrypt_name']         = false;
 	
 			$this->upload->initialize($config);
 	
 			if ( ! $this->upload->do_upload('com_img'))
 			{
 					$error = array('error' => $this->upload->display_errors());
-					echo $error['error'];
-					echo '<script> window.history.go(-1); </script>';
+					$picture_path = $_POST['picture_path'];
+					// echo "<script> alert('".$error['error']."'); </script>";
+					// echo '<script> window.history.go(-1); </script>';
 			}
 			else
 			{
@@ -277,6 +292,12 @@ class Backend extends CI_Controller {
 			}
 		}else{
 			$picture_path = $_POST['picture_path'];
+		}
+
+		if($_POST['course_id'] == '0'){
+			$course_id = NULL;
+		}else{
+			$course_id = $_POST['course_id'];
 		}
 
 		if($_POST['durable_age'] != ""){
@@ -305,12 +326,14 @@ class Backend extends CI_Controller {
 					'durable_age' => $durable_age[0]->durable_age,
 					'scrap_value' => $_POST['scrap_value'],
 					'can_borrow' => $_POST['can_borrow'],
+					'course_id' => $course_id,
+					'major_id' => $_POST['major_id'],
 					'borrow_status' => '2',
 				);
 				$result = $this->durable_model->insert_durable($data);
 				if($result){
 					echo '<script> alert(\'เพิ่มข้อมูลครุภัณฑ์เรียบร้อย\'); </script>';
-					echo '<script> window.history.go(-1); </script>';
+					redirect('manage_durable','refresh');
 				}else{
 					echo '<script> alert(\'ไม่สามารถเพิ่มข้อมูลครุภัณฑ์ได้\'); </script>';
 					echo '<script> window.history.go(-1); </script>';
@@ -336,6 +359,8 @@ class Backend extends CI_Controller {
 				'durable_age' => $durable_age[0]->durable_age,
 				'scrap_value' => $_POST['scrap_value'],
 				'can_borrow' => $_POST['can_borrow'],
+				'course_id' => $course_id,
+				'major_id' => $_POST['major_id'],
 			);
 			$result = $this->durable_model->update_durable($_POST['durable_id'],$data);
 			if($result){
@@ -346,6 +371,17 @@ class Backend extends CI_Controller {
 				echo '<script> window.history.go(-1); </script>';
 			}
 		}
+	}
+
+	public function delete_durable($id)
+	{
+		if($this->durable_model->delete_durable($id)){
+			echo '<script> alert(\'ลบข้อมูลครุภัณฑ์เรียบร้อย\'); </script>';
+		}else{
+			echo '<script> alert(\'ไม่สามารถลบข้อมูลครุภัณฑ์ได้\'); </script>';
+			
+		}
+		redirect('manage_durable','refresh');
 	}
 
 	public function form_qr_by_room()

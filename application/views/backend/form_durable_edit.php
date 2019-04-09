@@ -69,7 +69,7 @@
                                                     <?php 
                                                     foreach($query_faculties as $r) 
                                                     {
-                                                        if(isset($result[0]->faculty_id) AND $result[0]->faculty_id == $r->faculty_id){
+                                                        if(isset($faculty_id) AND $faculty_id == $r){
                                                             echo "<option value=\"".$r->faculty_id."\" selected>".$r->faculty_name."</option>";
                                                         }else{
                                                             echo "<option value=\"".$r->faculty_id."\">".$r->faculty_name."</option>";
@@ -89,17 +89,6 @@
                                                     <div class="form-group">
                                                     <select name="major_id" class="form-control" id="major">
                                                         <option value="">---สาขา---</option>
-                                                        <?php 
-                                                    foreach($query_majors as $r) 
-                                                    {
-                                                        if(isset($result[0]->major_id) AND $result[0]->major_id == $r->major_id){
-                                                            echo "<option value=\"".$r->major_id."\" selected>".$r->major_name."</option>";
-                                                        }else{
-                                                            echo "<option value=\"".$r->major_id."\">".$r->major_name."</option>";
-                                                        }
-                                                        
-                                                    }
-                                                    ?>
                                                     </select>
                                                     </div>
 
@@ -110,22 +99,8 @@
                                                 <div class="form-group col-md-12">
                                                     <label class="control-label">หลักสูตร</label>
                                                     <div class="form-group">
-                                                    <select name="course_id" class="form-control" >
+                                                    <select name="course_id" class="form-control" id="course">
                                                         <option value="">---หลักสูตร---</option>
-                                                        <option value="0">ไม่มีหลักสูตร</option>
-                                                        <div id="course">
-                                                        <?php 
-                                                    foreach($query_course as $r) 
-                                                    {
-                                                        if(isset($result[0]->course_id) AND $result[0]->course_id == $r->course_id){
-                                                            echo "<option value=\"".$r->course_id."\" selected>".$r->course_name."</option>";
-                                                        }else{
-                                                            echo "<option value=\"".$r->course_id."\">".$r->course_name."</option>";
-                                                        }
-                                                        
-                                                    }
-                                                    ?>
-                                                        </div>
                                                     </select>
                                                     </div>
 
@@ -204,7 +179,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             <label class="control-label">รายละเอียดครุภัณฑ์</label>
-                                            <textarea rows="10" name="description" placeholder="รายละเอียดครุภัณฑ์" type="text" class="form-control"><?php echo $description; ?></textarea> 
+                                            <textarea rows="10" name="description" value="<?php echo $description; ?>" placeholder="รายละเอียดครุภัณฑ์" type="text" class="form-control"></textarea> 
                                         </div>
                                     </div>
                                     <div class="row">
