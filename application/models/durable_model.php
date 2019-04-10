@@ -63,28 +63,31 @@ class durable_model extends CI_Model {
         function get_durable_id($id)
         {
             $sql = "SELECT da.durable_id,
-						   da.durable_code,
-						   da.durable_name,
-						   da.use_date,
-						   da.add_date,
-						   c.cat_name,
-						   da.picture_path,
-						   u.user_name,
-						   u.user_surname,
-						   da.price,
-						   ds.durable_status_name,
-						   r.room_name,
-						   da.description
-					FROM   durable_article da,
-						   category c,
-						   users u,
-						   durable_status ds,
-						   rooms r
-					WHERE  da.durable_id = ".$id."
-					AND    da.cat_id = c.cat_id
-					AND    da.user_id = u.user_id
-					AND    da.durable_status_id = ds.durable_status_id
-					AND    da.room_id = r.room_id;";
+						da.durable_code,
+						da.durable_name,
+						
+						da.use_date,
+						da.add_date,
+						c.cat_name,
+						da.picture_path,
+						u.user_name,
+						u.user_surname,
+						da.price,
+						ds.durable_status_name,
+						r.room_name,
+						da.description,
+						CASE WHEN co.course_name IS NULL THEN concat('สาขา ',m.major_name,' คณะ ',f.faculty_name)
+									ELSE concat('หลักสูตร ',co.course_name,' สาขา ',m.major_name,' คณะ ',f.faculty_name)
+								 END AS custom_owner_name
+			 FROM   durable_article da
+			 LEFT JOIN category c ON da.cat_id = c.cat_id
+			 LEFT JOIN users u ON da.user_id = u.user_id
+			 LEFT JOIN course co ON da.course_id = co.course_id
+			 LEFT JOIN majors m ON da.major_id = m.major_id
+			 LEFT JOIN faculties f ON m.faculty_id = f.faculty_id
+			 LEFT JOIN durable_status ds ON da.durable_status_id = ds.durable_status_id
+			 LEFT JOIN rooms r ON da.room_id = r.room_id
+			 WHERE  da.durable_id = ".$id.";";
             $query = $this->db->query($sql);
           return $query->result();
 		}

@@ -69,7 +69,8 @@
 		                                    		<div class="col-md-6">
 				                                        <div class="form-group">
 				                                            <label class="control-label">ผู้ดูแล</label>
-				                                            <input type="text" readonly="readonly" class="form-control" value="<?php echo $durable[0]->user_name." ".$durable[0]->user_surname; ?>">
+
+                                                            <textarea type="text" readonly="readonly" class="form-control"><?php echo $durable[0]->custom_owner_name; ?></textarea>
 				                                        </div>
 				                                    </div>
 				                                    <div class="col-md-6">
@@ -89,7 +90,7 @@
 		                                    		<div class="col-md-6">
 				                                        <div class="form-group">
 				                                            <label class="control-label">รายละเอียดเพิ่มเติม</label>
-				                                            <textarea type="text" readonly="readonly" class="form-control" value="<?php echo $durable[0]->description; ?>"></textarea>
+				                                            <textarea type="text" readonly="readonly" class="form-control"><?php echo $durable[0]->description; ?></textarea>
 				                                        </div>
 				                                    </div>
 				                                </div>
