@@ -162,12 +162,12 @@
 
                                     <ul class="sidebar-nav">
                                         <li <?php if($menu == 'manage_faculty'){ echo "class=\"active\""; } ?>>
-                                            <a href="<?= site_url('manage_faculty'); ?>"> จัดการ คณะ</a>
+                                            <a href="<?= site_url('manage_faculty'); ?>"> จัดการ คณะ / หน่วยงาน</a>
                                         </li>
                                     </ul>
                                     <ul class="sidebar-nav">
                                         <li <?php if($menu == 'manage_major'){ echo "class=\"active\""; } ?>>
-                                            <a href="<?= site_url('manage_major'); ?>"> จัดการ สาขา</a>
+                                            <a href="<?= site_url('manage_major'); ?>"> จัดการ สาขา / หน่วยงานย่อย</a>
                                         </li>
                                     </ul>
                                     <ul class="sidebar-nav">

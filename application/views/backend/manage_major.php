@@ -2,7 +2,7 @@
                 <!-- Begin Content -->
                 <article class="content dashboard-page">
                     <div class="title-block">
-                        <h3 class="title"> รายการสาขา </h3> <!-- หัวหลัก -->
+                        <h3 class="title"> รายการสาขา / หน่วยงานย่อย</h3> <!-- หัวหลัก -->
                         <!-- <p class="title-description"> Grid elements </p> --> <!-- หัวรอง -->
                     </div>
 
@@ -56,7 +56,7 @@
 												<thead>
 													<tr>
 														<th><center>ลำดับ</center></th>
-														<th><center>รายการสาขา</center></th>
+														<th><center>รายการสาขา / หน่วยงานย่อย</center></th>
 														<th><center>คณะ</center></th>
 														<th><center>จัดการ</center></th>
 													</tr>

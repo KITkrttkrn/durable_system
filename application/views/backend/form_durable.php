@@ -110,10 +110,10 @@
                                                 <div class="form-group col-md-12">
                                                     <label class="control-label">หลักสูตร</label>
                                                     <div class="form-group">
-                                                    <select name="course_id" class="form-control" >
+                                                    <select name="course_id" class="form-control" id="course">
                                                         <option value="">---หลักสูตร---</option>
                                                         <option value="0">ไม่มีหลักสูตร</option>
-                                                        <div id="course">
+                                                        
                                                         <?php 
                                                     foreach($query_course as $r) 
                                                     {
@@ -125,7 +125,7 @@
                                                         
                                                     }
                                                     ?>
-                                                        </div>
+                                                        
                                                     </select>
                                                     </div>
 
@@ -154,7 +154,8 @@
                                             <label class="control-label">ห้องของครุภัณฑ์</label>
                                             <div class="form-group">
                                             <select name="room_id" class="form-control">
-                                                <option value="0"><?php echo "--ห้องของครุภัณฑ์--"; ?></option>
+                                                <option value=""><?php echo "--ห้องของครุภัณฑ์--"; ?></option>
+                                                <option value="0"><?php echo "ไม่มีห้อง"; ?></option>
                                             <?php 
                                             foreach($query_room as $r_room) 
                                             {

@@ -198,7 +198,7 @@ class Admin extends CI_Controller {
 			'menu' => 'manage_faculty',
 			'faculty_id' => "",
 			'faculty_name' => "",
-			'prom_name' => "เพิ่มข้อมูลคณะ",
+			'prom_name' => "เพิ่มข้อมูลคณะ / หน่วยงาน",
 			'mode' => "I",
 		);
 		$this->load->view('main',$data);
@@ -215,7 +215,7 @@ class Admin extends CI_Controller {
             'menu' => 'manage_faculty',
 			'faculty_id' => $faculty[0]->faculty_id,
 			'faculty_name' => $faculty[0]->faculty_name,
-			'prom_name' => "แก้ไขข้อมูลคณะ",
+			'prom_name' => "แก้ไขข้อมูลคณะ / หน่วยงาน",
 			'mode' => "U",
 		);
 		$this->load->view('main',$data);
@@ -305,7 +305,7 @@ class Admin extends CI_Controller {
 			'major_id' => "",
 			'major_name' => "",
 			'mode' => "I",
-			'prom_name' => "เพิ่มข้อมูลสาขา",
+			'prom_name' => "เพิ่มข้อมูลสาขา / หน่วยงานย่อย",
 			'query' => $this->durable_model->get_faculty(),
 		);
 		$this->load->view('main',$data);
@@ -323,7 +323,7 @@ class Admin extends CI_Controller {
 			'major_id' => $major[0]->major_id,
 			'faculty_id' => $major[0]->faculty_id,
 			'major_name' => $major[0]->major_name,
-			'prom_name' => "แก้ไขข้อมูลสาขา",
+			'prom_name' => "แก้ไขข้อมูลสาขา / หน่วยงานย่อย",
 			'query' => $this->durable_model->get_faculty(),
 			'mode' => "U",
 		);

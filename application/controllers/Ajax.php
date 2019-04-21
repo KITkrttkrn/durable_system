@@ -51,6 +51,7 @@ class Ajax extends CI_Controller {
             //Display district list
             if($rowCount > 0){
                 echo '<option value="">---หลักสูตร---</option>';
+                echo '<option value="0">ไม่มีหลักสูตร</option>';
                 foreach($query as $r){ 
                     echo '<option value="'.$r->course_id.'">'.$r->course_name.'</option>';
                 }

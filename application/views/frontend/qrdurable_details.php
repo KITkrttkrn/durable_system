@@ -46,7 +46,7 @@
 				<div class="row">
 					<div class="col-md-3"></div>
 					<div class="col-md-3 col-xs-6">
-						<a href="<?php echo site_url('sign/').$r->durable_id; ?>" class="btn btn-success">ลงชื่อใช้งาน</a>
+						<a href="<?php echo site_url('sign/').$r->durable_id; ?>" class="btn btn-success">บันทึกใช้งาน</a>
 					</div>
 					<div class="col-md-3 col-xs-6">
 						<a href="<?php echo site_url('problem/').$r->durable_id; ?>" class="btn btn-danger">แจ้งปัญหา</a>
