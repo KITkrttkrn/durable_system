@@ -59,7 +59,16 @@
                                         </div>
                                     </div>
                                     <?php } ?>
-
+                                    <?php if(isset($_SESSION['login_true_superadmin']) AND $_SESSION['utype'] == 'S'){ ?>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label"> ประเภท </label>
+                                            <?php foreach ($query_type as $types){ ?>
+                                            <input <?php echo ($types->type_user_id == $type_user_id) ? "checked" : ""; ?> class="form-control" type="radio" name="type" value="<?php echo $types->type_user_id; ?>"> <?php echo $types->type_user_id; ?><br>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                    <?php } ?>
                                     <div class="row">
 
            <?php 
@@ -102,7 +111,7 @@
 
                                     <div class="row">
                                         <div class="form-group col-md-3">
-                                            <button class="btn btn-primary" type="submit">บันทึก</button>
+                                            <button id="btn_submit" class="btn btn-primary" type="submit">บันทึก</button>
                                         </div>
                                     </div>
                                     </form>
@@ -141,6 +150,7 @@ $(document).ready(function(){
 </script>
 
 <script type="text/javascript">
+            $("#btn_submit").attr("disabled", false);
  $(document).ready(function () {
    $("#u_pass, #u_pass2").keyup(checkPasswordMatch);
 });
@@ -150,11 +160,18 @@ $(document).ready(function(){
     var $result = $("#divCheckPasswordMatch");
 		$result.text("");
     if (password != confirmPassword){
+        //$("#divCheckPasswordMatch").html("<p>***รหัสผ่านทั้งสองไม่ตรงกัน</p>");
 		$result.text("***รหัสผ่านทั้งสองไม่ตรงกัน");
-        $result.css("color", "red");		
-	}else{
+        $result.css("color", "red");	
+        $("#btn_submit").attr("disabled", true);	
+	}else if(password == "" || confirmPassword == ""){
+        $result.text("");
+        $("#btn_submit").attr("disabled", true);
+    }else{
+        $("#divCheckPasswordMatch").html("***รหัสผ่านทั้งสองตรงกัน");
 		$result.text("***รหัสผ่านทั้งสองตรงกัน");
         $result.css("color", "green");	
+        $("#btn_submit").attr("disabled", false);
 	}	
 }
  </script>

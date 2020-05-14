@@ -51,7 +51,7 @@
 										</div>
 							</font>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-block btn-primary">Activate</button>
+                                <button type="submit" id="btn_submit" class="btn btn-block btn-primary">Activate</button>
                             </div>
                             
                         </form>
@@ -69,6 +69,7 @@
         <script src="<?= JS ?>/vendor.js"></script>
         <script src="<?= JS ?>/app.js"></script>
         <script type="text/javascript">
+            $("#btn_submit").attr("disabled", true);
  $(document).ready(function () {
    $("#u_pass, #u_pass2").keyup(checkPasswordMatch);
 });
@@ -80,11 +81,16 @@
     if (password != confirmPassword){
         //$("#divCheckPasswordMatch").html("<p>***รหัสผ่านทั้งสองไม่ตรงกัน</p>");
 		$result.text("***รหัสผ่านทั้งสองไม่ตรงกัน");
-        $result.css("color", "red");		
-	}else{
+        $result.css("color", "red");	
+        $("#btn_submit").attr("disabled", true);	
+	}else if(password == "" || confirmPassword == ""){
+        $result.text("");
+        $("#btn_submit").attr("disabled", true);
+    }else{
         $("#divCheckPasswordMatch").html("***รหัสผ่านทั้งสองตรงกัน");
 		$result.text("***รหัสผ่านทั้งสองตรงกัน");
         $result.css("color", "green");	
+        $("#btn_submit").attr("disabled", false);
 	}	
 }
  </script>

@@ -90,6 +90,8 @@
                                                     <select name="major_id" class="form-control" id="major">
                                                         <option value="">---สาขา---</option>
                                                         <?php 
+
+                                                    if(isset($query_majors)){
                                                     foreach($query_majors as $r) 
                                                     {
                                                         if(isset($result[0]->major_id) AND $result[0]->major_id == $r->major_id){
@@ -99,6 +101,7 @@
                                                         }
                                                         
                                                     }
+                                                }
                                                     ?>
                                                     </select>
                                                     </div>
@@ -115,6 +118,7 @@
                                                         <option value="0">ไม่มีหลักสูตร</option>
                                                         
                                                         <?php 
+                                                if(isset($query_course)){
                                                     foreach($query_course as $r) 
                                                     {
                                                         if(isset($result[0]->course_id) AND $result[0]->course_id == $r->course_id){
@@ -124,6 +128,7 @@
                                                         }
                                                         
                                                     }
+                                                }
                                                     ?>
                                                         
                                                     </select>

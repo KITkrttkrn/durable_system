@@ -1,6 +1,11 @@
 <?php
 class user_model extends CI_Model {
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     function get_users()
 	{	$sql = "select 
                 u.user_id
@@ -10,7 +15,8 @@ class user_model extends CI_Model {
             ,tu.type_user_name
             from users u,
                 type_user tu
-        where u.type_user_id = tu.type_user_id;";
+        where u.type_user_id = tu.type_user_id
+        and   u.type_user_id IN ('A','U');";
 		$query = $this->db->query($sql);
 		return $query->result();
     }
@@ -106,6 +112,14 @@ class user_model extends CI_Model {
     function get_room_id($id)
     {
         $sql = "SELECT * FROM rooms WHERE building_id = ".$id.";";
+        // print_r($sql);
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    function get_type()
+    {
+        $sql = "SELECT * FROM type_user WHERE type_user_id != 'S';";
         // print_r($sql);
         $query = $this->db->query($sql);
         return $query->result();

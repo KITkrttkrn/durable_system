@@ -88,14 +88,20 @@
                     </section>
                     <section class="section">
                         <div class="row">
-                            <div class="col-md-3">
-                                <div class="col-md-6">
+                            <div class="col-md-1">
+                                <div class="col-md-12">
                                     <a href="#" onclick="window.history.back();" class="btn btn-secondary">ย้อนกลับ</a>
                                 </div>
-                                        </div>
-                                    </div>
+                            </div>
+                            <?php if(isset($_SESSION['login_true_superadmin']) AND $_SESSION['uid'] == 'S'){ ?>
+                            <div class="col-md-1">
+                                <div class="col-md-6">
+                            
+                                    <a href="<?php echo site_url('edit_profile/'.$query[0]->user_id); ?>" class="btn btn-primary">แก้ไขข้อมูล</a>
+                                   
                                 </div>
                             </div>
+                            <?php } ?>
                         </div>
                     </section>
 

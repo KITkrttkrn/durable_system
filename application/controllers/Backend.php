@@ -70,7 +70,8 @@ class Backend extends CI_Controller {
 			'durable' => $query,
 			'report' => $query2
 		);
-		$this->load->view('main',$data);
+		print_r($query);
+		// $this->load->view('main',$data);
 	}
 
 	public function report_detail($id)
@@ -153,7 +154,7 @@ class Backend extends CI_Controller {
 	public function profile_detail($id)
 	{
 		authen_sys();
-		if($id == $_SESSION['uid']){
+		if($id == $_SESSION['uid'] OR isset($_SESSION['login_true_superadmin'])){
 			$sysname = $this->sysconfig->sysname();
 			$query = $this->user_model->get_user_detail($id);
 			$changedate = explode("-",substr($query[0]->register_date,0,10));
@@ -203,7 +204,7 @@ class Backend extends CI_Controller {
 					'use_date' => $result[0]->use_date,
 					'cat_id' => $result[0]->cat_id,
 					'picture_path' => $result[0]->picture_path,
-					'img_path_img' => site_url('resources/durable/'),
+					'img_path_img' => base_url('resources/durable/'),
 					'user_id' => $result[0]->user_id,
 					'price' => $result[0]->price,
 					'scrap_value' => $result[0]->scrap_value,
@@ -242,7 +243,7 @@ class Backend extends CI_Controller {
 					'use_date' => "",
 					'cat_id' => "",
 					'picture_path' => "noimg.jpg",
-					'img_path_img' => site_url('resources/durable/'),
+					'img_path_img' => base_url('resources/durable/'),
 					'user_id' => "",
 					'price' => "",
 					'scrap_value' => "",

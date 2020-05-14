@@ -1,6 +1,11 @@
 <?php
 class borrow_model extends CI_Model {
 
+       public function __construct()
+       {
+           parent::__construct();
+       }
+       
         function get_available_durable()
         {
             $sql = "SELECT b.durable_id

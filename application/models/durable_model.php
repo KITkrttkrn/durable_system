@@ -1,7 +1,13 @@
 <?php
 class durable_model extends CI_Model {
 
-        function get_durable()
+
+	public function __construct()
+	{
+			parent::__construct();
+	}
+	
+	function get_durable()
         {
             $this->db->select('*');
             $query = $this->db->get('durable_article');
@@ -425,7 +431,6 @@ class durable_model extends CI_Model {
 
 		public function update_durable($id,$data = array())
 		{
-			$q = $this->db->where('durable_id', $id);
 			$q = $this->db->update('durable_article', $data);
 			if($q){
 				return TRUE;

@@ -49,7 +49,7 @@ $sql = "SELECT durable_id,
 				    	<div class="col-md-12">
 				    		  <div class="form-group">
     								<label for="reporter_id">หัวข้อปัญหา</label>
-    								<input reauired type="text" class="form-control" name="report_topic" id="report_topic" placeholder="โปรดกรอกรหัสนักศึกษา">
+    								<input required type="text" class="form-control" name="report_topic" id="report_topic" placeholder="โปรดกรอกรหัสนักศึกษา">
   							  </div>
 				    	</div>
 				    </div>
@@ -58,7 +58,7 @@ $sql = "SELECT durable_id,
 				    		  <div class="form-group">
 				    		  		<input type="hidden" class="form-control" name="durable_id" value="<?php echo $r->durable_id; ?>">
     								<label for="report_detail">รายละเอียดปัญหา</label>
-    								<textarea  reauired  type="text" class="form-control" name="report_detail" id="report_detail" placeholder="โปรดกรอกรายละเอียด"></textarea>
+    								<textarea type="text" class="form-control" name="report_detail" id="report_detail" placeholder="โปรดกรอกรายละเอียด"></textarea>
   							  </div>
 				    	</div>
 				    </div>
@@ -66,7 +66,7 @@ $sql = "SELECT durable_id,
 				    	<div class="col-md-12">
 				    		  <div class="form-group">
     								<label for="reporter_id">รหัสนักศึกษา</label>
-    								<input reauired type="text" class="form-control" name="reporter_id" id="reporter_id" placeholder="โปรดกรอกรหัสนักศึกษา">
+    								<input type="text" class="form-control" name="reporter_id" id="reporter_id" placeholder="โปรดกรอกรหัสนักศึกษา">
   							  </div>
 				    	</div>
 				    </div>
@@ -74,7 +74,7 @@ $sql = "SELECT durable_id,
 				    	<div class="col-md-12">
 				    		  <div class="form-group">
     								<label for="reporter_name">ชื่อ </label>
-    								<input reauired type="text" class="form-control" name="reporter_name" id="reporter_name" placeholder="โปรดกรอกชื่อ">
+    								<input required type="text" class="form-control" name="reporter_name" id="reporter_name" placeholder="โปรดกรอกชื่อ">
   							  </div>
 				    	</div>
 				    </div>
@@ -82,7 +82,7 @@ $sql = "SELECT durable_id,
 				    	<div class="col-md-12">
 				    		  <div class="form-group">
     								<label for="reporter_surname">นามสกุล</label>
-    								<input reauired type="text" class="form-control" name="reporter_surname" id="reporter_surname" placeholder="โปรดกรอกนามสกุล">
+    								<input required type="text" class="form-control" name="reporter_surname" id="reporter_surname" placeholder="โปรดกรอกนามสกุล">
   							  </div>
 				    	</div>
 				    </div>

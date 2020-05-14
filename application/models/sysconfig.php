@@ -1,6 +1,11 @@
 <?php
 class sysconfig extends CI_Model {
 
+	public function __construct()
+    {
+        parent::__construct();
+    }
+
     function sysname()
 	{	
 		$query = $this->db->select('syscode,sysvalue');

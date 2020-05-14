@@ -45,6 +45,13 @@ class Auth extends CI_Controller {
 						$_SESSION['login_true_sys'] = $user[0]->uname;
                         $_SESSION['login_true'] = $user[0]->uname;						
 					}
+					elseif($user[0]->type_user_id == 'S')
+					{
+						$_SESSION['login_true_sysadmin'] = $user[0]->uname;
+						$_SESSION['login_true_superadmin'] = $user[0]->uname;
+						$_SESSION['login_true'] = $user[0]->uname;
+					}
+
 					$_SESSION['DuRaBlEsYsTeM'] = 1;
 					// temporary message
 					$welcome_string = "ยินดีต้อนรับ คุณ".$user[0]->uname;

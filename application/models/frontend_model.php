@@ -1,6 +1,11 @@
 <?php
 class frontend_model extends CI_Model {
 
+	public function __construct()
+    {
+        parent::__construct();
+	}
+	
         function get_durable_detail($durable_id)
         {
           $sql = "SELECT da.durable_id,

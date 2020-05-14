@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2019 at 09:39 AM
+-- Generation Time: May 01, 2019 at 09:34 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -30,6 +30,7 @@ USE `durable_management_system`;
 -- Table structure for table `borrows`
 --
 
+DROP TABLE IF EXISTS `borrows`;
 CREATE TABLE IF NOT EXISTS `borrows` (
   `borrow_id` int(11) NOT NULL AUTO_INCREMENT,
   `durable_id` int(11) NOT NULL,
@@ -47,6 +48,7 @@ CREATE TABLE IF NOT EXISTS `borrows` (
 --
 -- Triggers `borrows`
 --
+DROP TRIGGER IF EXISTS `add_date_borrow`;
 DELIMITER $$
 CREATE TRIGGER `add_date_borrow` BEFORE INSERT ON `borrows` FOR EACH ROW BEGIN
 	IF (NEW.borrow_date IS NULL) THEN
@@ -55,6 +57,7 @@ CREATE TRIGGER `add_date_borrow` BEFORE INSERT ON `borrows` FOR EACH ROW BEGIN
  END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `update_borrow`;
 DELIMITER $$
 CREATE TRIGGER `update_borrow` BEFORE UPDATE ON `borrows` FOR EACH ROW BEGIN
 	IF (NEW.return_date IS NULL) THEN
@@ -70,6 +73,7 @@ DELIMITER ;
 -- Table structure for table `borrow_detail`
 --
 
+DROP TABLE IF EXISTS `borrow_detail`;
 CREATE TABLE IF NOT EXISTS `borrow_detail` (
   `borrow_detail_id` int(11) NOT NULL,
   `borrow_id` int(11) NOT NULL,
@@ -83,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `borrow_detail` (
 -- Table structure for table `borrow_status`
 --
 
+DROP TABLE IF EXISTS `borrow_status`;
 CREATE TABLE IF NOT EXISTS `borrow_status` (
   `borrow_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `borrow_status_name` varchar(255) NOT NULL,
@@ -103,6 +108,7 @@ INSERT INTO `borrow_status` (`borrow_status_id`, `borrow_status_name`) VALUES
 -- Table structure for table `buildings`
 --
 
+DROP TABLE IF EXISTS `buildings`;
 CREATE TABLE IF NOT EXISTS `buildings` (
   `building_id` int(11) NOT NULL AUTO_INCREMENT,
   `building_name` varchar(255) NOT NULL,
@@ -124,6 +130,7 @@ INSERT INTO `buildings` (`building_id`, `building_name`, `campus_id`) VALUES
 -- Table structure for table `campus`
 --
 
+DROP TABLE IF EXISTS `campus`;
 CREATE TABLE IF NOT EXISTS `campus` (
   `campus_id` int(11) NOT NULL AUTO_INCREMENT,
   `campus_name` varchar(255) NOT NULL,
@@ -146,6 +153,7 @@ INSERT INTO `campus` (`campus_id`, `campus_name`) VALUES
 -- Table structure for table `category`
 --
 
+DROP TABLE IF EXISTS `category`;
 CREATE TABLE IF NOT EXISTS `category` (
   `cat_id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(255) NOT NULL,
@@ -175,6 +183,7 @@ INSERT INTO `category` (`cat_id`, `cat_name`, `durable_age`) VALUES
 -- Table structure for table `course`
 --
 
+DROP TABLE IF EXISTS `course`;
 CREATE TABLE IF NOT EXISTS `course` (
   `course_id` int(11) NOT NULL AUTO_INCREMENT,
   `course_name` varchar(255) NOT NULL,
@@ -197,6 +206,7 @@ INSERT INTO `course` (`course_id`, `course_name`, `major_id`) VALUES
 -- Table structure for table `durable_article`
 --
 
+DROP TABLE IF EXISTS `durable_article`;
 CREATE TABLE IF NOT EXISTS `durable_article` (
   `durable_id` int(11) NOT NULL AUTO_INCREMENT,
   `durable_code` varchar(255) NOT NULL,
@@ -238,6 +248,7 @@ INSERT INTO `durable_article` (`durable_id`, `durable_code`, `durable_name`, `us
 --
 -- Triggers `durable_article`
 --
+DROP TRIGGER IF EXISTS `durable_add_date`;
 DELIMITER $$
 CREATE TRIGGER `durable_add_date` BEFORE INSERT ON `durable_article` FOR EACH ROW BEGIN
 	IF (NEW.add_date IS NULL) THEN
@@ -253,6 +264,7 @@ DELIMITER ;
 -- Table structure for table `durable_status`
 --
 
+DROP TABLE IF EXISTS `durable_status`;
 CREATE TABLE IF NOT EXISTS `durable_status` (
   `durable_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `durable_status_name` varchar(255) NOT NULL,
@@ -274,6 +286,7 @@ INSERT INTO `durable_status` (`durable_status_id`, `durable_status_name`) VALUES
 -- Table structure for table `faculties`
 --
 
+DROP TABLE IF EXISTS `faculties`;
 CREATE TABLE IF NOT EXISTS `faculties` (
   `faculty_id` int(11) NOT NULL AUTO_INCREMENT,
   `faculty_name` varchar(45) NOT NULL,
@@ -293,6 +306,7 @@ INSERT INTO `faculties` (`faculty_id`, `faculty_name`) VALUES
 -- Table structure for table `identify_log`
 --
 
+DROP TABLE IF EXISTS `identify_log`;
 CREATE TABLE IF NOT EXISTS `identify_log` (
   `identify_log_id` int(11) NOT NULL AUTO_INCREMENT,
   `durable_id` int(11) NOT NULL,
@@ -308,6 +322,7 @@ CREATE TABLE IF NOT EXISTS `identify_log` (
 --
 -- Triggers `identify_log`
 --
+DROP TRIGGER IF EXISTS `identify_datetime`;
 DELIMITER $$
 CREATE TRIGGER `identify_datetime` BEFORE INSERT ON `identify_log` FOR EACH ROW BEGIN
 	IF (NEW.identify_datetime IS NULL) THEN
@@ -323,6 +338,7 @@ DELIMITER ;
 -- Table structure for table `identify_status`
 --
 
+DROP TABLE IF EXISTS `identify_status`;
 CREATE TABLE IF NOT EXISTS `identify_status` (
   `identify_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `identify_status_name` varchar(255) NOT NULL,
@@ -335,6 +351,7 @@ CREATE TABLE IF NOT EXISTS `identify_status` (
 -- Table structure for table `majors`
 --
 
+DROP TABLE IF EXISTS `majors`;
 CREATE TABLE IF NOT EXISTS `majors` (
   `major_id` int(11) NOT NULL AUTO_INCREMENT,
   `major_name` varchar(45) DEFAULT NULL,
@@ -356,6 +373,7 @@ INSERT INTO `majors` (`major_id`, `major_name`, `faculty_id`) VALUES
 -- Table structure for table `problem_report`
 --
 
+DROP TABLE IF EXISTS `problem_report`;
 CREATE TABLE IF NOT EXISTS `problem_report` (
   `problem_id` int(11) NOT NULL AUTO_INCREMENT,
   `problem_topic` varchar(255) NOT NULL,
@@ -384,6 +402,7 @@ INSERT INTO `problem_report` (`problem_id`, `problem_topic`, `problem_detail`, `
 --
 -- Triggers `problem_report`
 --
+DROP TRIGGER IF EXISTS `report_add_time`;
 DELIMITER $$
 CREATE TRIGGER `report_add_time` BEFORE INSERT ON `problem_report` FOR EACH ROW BEGIN
 	IF (NEW.report_datetime IS NULL) THEN
@@ -399,6 +418,7 @@ DELIMITER ;
 -- Table structure for table `problem_status`
 --
 
+DROP TABLE IF EXISTS `problem_status`;
 CREATE TABLE IF NOT EXISTS `problem_status` (
   `problem_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `problem_status_name` varchar(255) NOT NULL,
@@ -422,6 +442,7 @@ INSERT INTO `problem_status` (`problem_status_id`, `problem_status_name`) VALUES
 -- Table structure for table `rooms`
 --
 
+DROP TABLE IF EXISTS `rooms`;
 CREATE TABLE IF NOT EXISTS `rooms` (
   `room_id` int(11) NOT NULL AUTO_INCREMENT,
   `room_name` varchar(255) DEFAULT NULL,
@@ -444,6 +465,7 @@ INSERT INTO `rooms` (`room_id`, `room_name`, `building_id`) VALUES
 -- Table structure for table `sysconfig`
 --
 
+DROP TABLE IF EXISTS `sysconfig`;
 CREATE TABLE IF NOT EXISTS `sysconfig` (
   `syscode` char(3) NOT NULL COMMENT 'รหัส',
   `sysvalue` varchar(255) DEFAULT NULL COMMENT 'ค่า',
@@ -479,6 +501,7 @@ INSERT INTO `sysconfig` (`syscode`, `sysvalue`, `sysdesc`) VALUES
 -- Table structure for table `type_user`
 --
 
+DROP TABLE IF EXISTS `type_user`;
 CREATE TABLE IF NOT EXISTS `type_user` (
   `type_user_id` char(1) NOT NULL,
   `type_user_name` varchar(255) DEFAULT NULL,
@@ -499,6 +522,7 @@ INSERT INTO `type_user` (`type_user_id`, `type_user_name`) VALUES
 -- Table structure for table `usage_log`
 --
 
+DROP TABLE IF EXISTS `usage_log`;
 CREATE TABLE IF NOT EXISTS `usage_log` (
   `usage_id` int(11) NOT NULL AUTO_INCREMENT,
   `durable_id` int(11) NOT NULL,
@@ -530,6 +554,7 @@ INSERT INTO `usage_log` (`usage_id`, `durable_id`, `usage_datetime`) VALUES
 --
 -- Triggers `usage_log`
 --
+DROP TRIGGER IF EXISTS `add_time_to_usagelog`;
 DELIMITER $$
 CREATE TRIGGER `add_time_to_usagelog` BEFORE INSERT ON `usage_log` FOR EACH ROW BEGIN
 	IF (NEW.usage_datetime IS NULL) THEN
@@ -545,6 +570,7 @@ DELIMITER ;
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(255) DEFAULT NULL,
@@ -576,6 +602,7 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_surname`, `user_email`, `user
 --
 -- Triggers `users`
 --
+DROP TRIGGER IF EXISTS `add_register_date_users`;
 DELIMITER $$
 CREATE TRIGGER `add_register_date_users` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
 	IF (NEW.register_date IS NULL) THEN

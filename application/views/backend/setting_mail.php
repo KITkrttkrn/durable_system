@@ -36,10 +36,10 @@
                                      <form action="<?= site_url('process_setting'); ?>" method="POST">
                                      <div class="row">
                                         <div class="col-xl-12 col-md-12 col-xs-12">
-                                            <label class="control-label"> <b>รหัสผ่าน ปัจจุบัน: </b><?= $query_pass[0]->sysvalue; ?> </label>
+                                            <label class="control-label"> <b>รหัสผ่าน</b></label>
                                             <input type="hidden" name="viewname" value="setting_mail">
                                             <input type="hidden" name="syscode" value="<?= $query_pass[0]->syscode; ?>">
-                                            <input class="form-control" name="sysvalue" type="text" value="<?= $query_pass[0]->sysvalue; ?>">
+                                            <input class="form-control" name="sysvalue" type="password" value="<?= $query_pass[0]->sysvalue; ?>">
                                         </div>
                                      </div>
                                      <br>

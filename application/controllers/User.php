@@ -81,35 +81,42 @@ class User extends CI_Controller {
 		$sysname = $this->sysconfig->sysname();
 		if ($id != NULL)
 		{
-            $prom_form = "แก้ไขข้อมูลผู้ใช้งาน";
-            $o_id = $id;	
-            
-            $result = $this->user_model->get_user_update($o_id);
-            $query_fac = $this->user_model->get_faculty();
-            $query_major = $this->user_model->get_major_id($result[0]->major_id);
-            foreach($result as $row) 
-            {
-                $data = array(
-                    'sysname' => $sysname[0]->sysvalue,
-                    'page' => 'backend/form_user',
-                    'menu' => 'edit_profile',
-                    'prom_form' => $prom_form,
-                    'mode' => 'U',
-                    'user_id' => $row->user_id,
-                    'user_name' => $row->user_name,
-                    'user_surname' => $row->user_surname,
-                    'user_email' => $row->user_email,
-                    'user_password' => $row->user_password,
-                    'type_user_id' => $row->type_user_id,
-                    'register_date' => $row->register_date,
-                    'major_id' => $row->major_id,
-                    'faculty_id' => $row->faculty_id,
-                    'query_faculty' => $query_fac,
-                    'query_major' => $query_major,
-                );
-                
-            }  
-			$this->load->view('main',$data); 
+			if(isset($_SESSION['login_true_superadmin']) OR $id == $_SESSION['uid']){
+				$prom_form = "แก้ไขข้อมูลผู้ใช้งาน";
+				$o_id = $id;	
+				
+				$result = $this->user_model->get_user_update($o_id);
+				$query_fac = $this->user_model->get_faculty();
+				$query_major = $this->user_model->get_major_id($result[0]->major_id);
+				$query_type = $this->user_model->get_type();
+				foreach($result as $row) 
+				{
+					$data = array(
+						'sysname' => $sysname[0]->sysvalue,
+						'page' => 'backend/form_user',
+						'menu' => 'edit_profile',
+						'prom_form' => $prom_form,
+						'mode' => 'U',
+						'user_id' => $row->user_id,
+						'user_name' => $row->user_name,
+						'user_surname' => $row->user_surname,
+						'user_email' => $row->user_email,
+						'user_password' => $row->user_password,
+						'type_user_id' => $row->type_user_id,
+						'register_date' => $row->register_date,
+						'major_id' => $row->major_id,
+						'faculty_id' => $row->faculty_id,
+						'query_faculty' => $query_fac,
+						'query_major' => $query_major,
+						'query_type' => $query_type,
+					);
+					
+				}  
+				$this->load->view('main',$data);
+			}else{
+				echo "<script> alert('ไม่สามารถเพิ่มผู้ใช้งานได้'); </script>";
+				redirect("dashboard","refresh");
+			}
 		}else{
 				$query = $this->user_model->get_faculty();
 				$prom_form ="ลงทะเบียนทะเบียนผู้ใช้งาน";
@@ -155,7 +162,7 @@ class User extends CI_Controller {
 				$query = $this->user_model->insert_user($data);
 				if($query){
 					echo "<script> alert('เพิ่มผู้ใช้งานเรียบร้อย'); </script>";
-					$email_link = site_url()."/activation?email=".$_POST['user_email']."&token=".$token;
+					$email_link = site_url()."activation?email=".$_POST['user_email']."&token=".$token;
 					$user_mail = $this->sysconfig->user_mail();
 					$user_pass = $this->sysconfig->user_pass();
 					$mail_port = $this->sysconfig->mail_port();
