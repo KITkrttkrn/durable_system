@@ -13,7 +13,7 @@ class Backend extends CI_Controller {
 		$this->load->model('durable_model');
 		$this->load->model('report_model');
 		$this->load->model('user_model');
-		$this->load->model('Sysconfig');
+		$this->load->model('sysconfig_model');
 		$this->load->helper('authen');
 	}
 
