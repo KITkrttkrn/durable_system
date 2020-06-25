@@ -77,10 +77,17 @@ $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
 
 $db['default'] = array(
 	'dsn'	=> '',
+<<<<<<< HEAD
 	'hostname' => $url["host"],
 	'username' => $url["user"],
 	'password' => $url["pass"],
 	'database' => substr($url["path"], 1),
+=======
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'durable_management_system',
+>>>>>>> parent of e5c0485... make it better
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
