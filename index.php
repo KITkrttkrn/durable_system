@@ -307,7 +307,7 @@ switch (ENVIRONMENT)
 
 	// $root =(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
 	// $root .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
-	$root = "comsci-durable-system.herokuapp.com/";
+	$root = "https://comsci-durable-system.herokuapp.com";
 	define('SITE_URL', $root);
 	define('WEB_URL', $root.'index.php');
 	define('CSS', $root.'template/css');
