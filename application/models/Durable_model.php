@@ -1,5 +1,5 @@
 <?php
-class durable_model extends CI_Model {
+class Durable_model extends CI_Model {
 
 
 	public function __construct()
