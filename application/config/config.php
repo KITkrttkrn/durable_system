@@ -37,7 +37,7 @@ $config['base_url'] = $root;
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'views/pages/home.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
