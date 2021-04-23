@@ -1,5 +1,5 @@
 <?php
-class borrow_model extends CI_Model {
+class Borrow_model extends CI_Model {
 
        public function __construct()
        {
