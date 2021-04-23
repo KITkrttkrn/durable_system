@@ -305,9 +305,9 @@ switch (ENVIRONMENT)
 
 	define('VIEWPATH', $view_folder.DIRECTORY_SEPARATOR);
 
-	$root =(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
-	$root .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
-	// $root = "http://203.158.224.155/comsci_project/durable_system/";
+	// $root =(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
+	// $root .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+	$root = "comsci-durable-system.herokuapp.com/";
 	define('SITE_URL', $root);
 	define('WEB_URL', $root.'index.php');
 	define('CSS', $root.'template/css');
