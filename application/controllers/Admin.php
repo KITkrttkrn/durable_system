@@ -9,7 +9,7 @@ class Admin extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->library('email');
 		$this->load->library('upload');
-		$this->load->model('login_model');
+		$this->load->model('Login_model');
 		$this->load->model('durable_model');
 		$this->load->model('report_model');
 		$this->load->model('user_model');
