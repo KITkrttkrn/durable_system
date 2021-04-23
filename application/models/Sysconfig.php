@@ -1,5 +1,5 @@
 <?php
-class sysconfig extends CI_Model
+class Sysconfig extends CI_Model
 {
 
     public function __construct()
