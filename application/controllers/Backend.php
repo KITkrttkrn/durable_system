@@ -16,6 +16,7 @@ class Backend extends CI_Controller
         $this->load->model('user_model');
         $this->load->model('sysconfig');
         $this->load->helper('authen');
+        
     }
 
     public function index()
