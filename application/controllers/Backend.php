@@ -10,11 +10,11 @@ class Backend extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('email');
         $this->load->library('upload');
-        $this->load->model('Login_model');
-        $this->load->model('durable_model');
-        $this->load->model('report_model');
-        $this->load->model('user_model');
-        $this->load->model('sysconfig');
+        $this->load->model('models/login_model');
+        $this->load->model('models/durable_model');
+        $this->load->model('models/report_model');
+        $this->load->model('models/user_model');
+        $this->load->model('models/sysconfig');
         $this->load->helper('authen');
     }
 

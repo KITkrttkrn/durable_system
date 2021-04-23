@@ -27,7 +27,7 @@ $root =(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST']
 $root .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 // $root = "http://203.158.224.155/comsci_project/durable_system/";
 $config['base_url'] = $root;
-
+echo $root;
 /*
 |--------------------------------------------------------------------------
 | Index File
