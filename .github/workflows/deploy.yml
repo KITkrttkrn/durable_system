@@ -1,0 +1,17 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: 3be8fe00-78f4-4735-b65f-ffb8243eaae7
+          heroku_app_name: "comsci-durable-system" #Must be unique in Heroku
+          heroku_email: "vkrittikarn@gmail.com"
