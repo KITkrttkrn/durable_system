@@ -7,7 +7,7 @@ class Ajax extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('form_validation');
-		$this->load->model('Login_model');
+		$this->load->model('login_model');
 		$this->load->model('durable_model');
 		$this->load->model('report_model');
 		$this->load->model('user_model');
