@@ -158,7 +158,7 @@ class User extends CI_Controller {
 					'major_id' => $_POST['major_id'],
 					'user_status_id' => 'N',
 					'user_token' => $token,
-					'register_datetime' => date("Y-m-d H:i:s")
+					'register_date' => date("Y-m-d H:i:s")
 				);
 				$query = $this->user_model->insert_user($data);
 				if($query){
