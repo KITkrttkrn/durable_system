@@ -44,10 +44,10 @@ class pdf extends CI_Controller
 
 			$defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
 			$fontData = $defaultFontConfig['fontdata'];
-
+			echo __DIR__;
 			$mpdf = new \Mpdf\Mpdf([
 				'fontDir' => array_merge($fontDirs, [
-					__DIR__ . '/fonts',
+					__DIR__ . '/template/fonts',
 					'mode' => 'utf-8',
 					'format' => 'A4'
 				]),
