@@ -30,7 +30,7 @@ class pdf extends CI_Controller
 		if ($id != NULL) {
 
 			$qr_image = rand() . '.png';
-			$params['data'] = site_url('qrdurable_detail/' . $id);
+			$params['data'] = site_url('durableqr/' . $id);
 			$params['level'] = 'H';
 			$params['size'] = 10;
 			$params['savename'] = FCPATH . "uploads/qr_image/" . $qr_image;
@@ -159,7 +159,7 @@ class pdf extends CI_Controller
 					$content .= "<tr>";
 				}
 				$qr_image = $r->durable_id . '.png';
-				$params['data'] = site_url('qrdurable_detail/' . $r->durable_id);
+				$params['data'] = site_url('durableqr/' . $r->durable_id);
 				$params['level'] = 'H';
 				$params['size'] = 10;
 				$params['savename'] = FCPATH . "uploads/qr_image/" . $qr_image;

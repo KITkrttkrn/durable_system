@@ -55,7 +55,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 //Durable_detail Controller
 $route['success'] = "durable_detail/success";
-$route['qrdurable_detail/(:num)'] = "durable_detail/index/$1";
+$route['durableqr/(:num)'] = "durable_detail/index/$1";
 $route['sign/(:num)'] = "durable_detail/sign/$1";
 $route['problem/(:num)'] = "durable_detail/report_view/$1";
 
