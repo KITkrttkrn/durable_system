@@ -87,7 +87,7 @@ class Durable_detail extends CI_Controller {
 				                   'reporter_name' => $reporter_name,
 				                   'reporter_surname' => $reporter_surname,
 				                   'problem_status_id' => $problem_status_id,
-								   'report_datetime' => date("Y-m-d h:m:s")
+								   'report_datetime' => date("Y-m-d H:i:s")
 			);
 			$query = $this->frontend_model->insert_report($string_value);
 			if($query){

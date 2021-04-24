@@ -39,7 +39,7 @@ class Frontend_model extends CI_Model {
         function insert_sign($durable_id)
         {
         		$data = array( 'durable_id' => $durable_id,
-			                   'usage_datetime' => date("Y-m-d h:m:s"));
+			                   'usage_datetime' => date("Y-m-d H:i:s"));
 				$query = $this->db->insert('usage_log', $data);
 				if($query){
 					return true;
