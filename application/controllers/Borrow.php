@@ -57,11 +57,13 @@ class Borrow extends CI_Controller {
 			echo "<script> window.history.go(-1); </script>";
 		}else{
 			$borrow_status_id = '1';
+			
 			$data = array(
 				'durable_id' => $_POST['durable_id'],
 				'users_user_id' => $_SESSION['uid'],
 				'due_date' => $_POST['return_date'],
 				'borrow_status_id' => $borrow_status_id,
+				'borrow_date' => date("Y-m-d")
 			);
 			$available_durable = $this->borrow_model->insert_borrow($data);
 			$update_durable = $this->borrow_model->update_borrow_durable($_POST['durable_id'],$borrow_status_id);
@@ -103,6 +105,7 @@ class Borrow extends CI_Controller {
 			$borrow_data = $this->borrow_model->get_durable_borrowing($borrow_id);
 			$data = array(
 				'borrow_status_id' => $borrow_status_id,
+				'return_date' => date("Y-m-d")
 			);
 			// print_r($borrow_data);
 			$available_durable = $this->borrow_model->update_borrow($borrow_id,$data);

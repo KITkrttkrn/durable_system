@@ -325,6 +325,7 @@ class Backend extends CI_Controller
                     'course_id' => $course_id,
                     'major_id' => $_POST['major_id'],
                     'borrow_status' => '2',
+                    'add_date' => date("Y-m-d")
                 );
                 $result = $this->durable_model->insert_durable($data);
                 if ($result) {
