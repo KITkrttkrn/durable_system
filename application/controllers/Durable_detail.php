@@ -80,6 +80,19 @@ class Durable_detail extends CI_Controller {
 			$reporter_surname = $this->input->post('reporter_surname');
 			$problem_status_id = 1;
 
+			$recaptcha_secret = "6Lda_3kUAAAAAImTR39uKEUeLcop0VBrGc9h7RtW";
+			$recaptcha_response = trim($this->input->post('g-recaptcha-response'));
+			$recaptcha_remote_ip = $_SERVER['REMOTE_ADDR'];
+			 
+			$recaptcha_api = "https://www.google.com/recaptcha/api/siteverify?".
+				http_build_query(array(
+					'secret'=>$recaptcha_secret,
+					'response'=>$recaptcha_response,
+					'remoteip'=>$recaptcha_remote_ip
+				)
+			);
+			$response=json_decode(file_get_contents($recaptcha_api), true);    
+
 			$string_value = array( 'durable_id' => $durable_id,
 				                   'problem_topic' => $problem_topic,
 				                   'problem_detail' => $problem_detail,
@@ -90,7 +103,7 @@ class Durable_detail extends CI_Controller {
 								   'report_datetime' => date("Y-m-d H:i:s")
 			);
 			$query = $this->frontend_model->insert_report($string_value);
-			if($query){
+			if($query AND $response){
 				$message = $this->sysconfig->getLineMessage();
 				$token = $this->sysconfig->getLineToken();
 				$this->curl->line_api($message[0]->sysvalue,$token[0]->sysvalue);
