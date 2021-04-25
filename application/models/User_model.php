@@ -130,7 +130,7 @@ class User_model extends CI_Model {
         try {
             $this->db->insert('users', $data);
     
-            // documentation œ
+            // documentation at
             // https://www.codeigniter.com/userguide3/database/queries.html#handling-errors
             // says; "the error() method will return an array containing its code and message"
             $db_error = $this->db->error();

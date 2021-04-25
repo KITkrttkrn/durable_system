@@ -1,4 +1,8 @@
-
+<?php
+$sql = "SELECT durable_id,
+			   durable_code,
+			   durable_name";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,14 +92,7 @@
 				<div class="row">
 					<div class="col-md-3"></div>
 					<div class="col-md-6 col-xs-12">
-						<div class="g-recaptcha" data-callback="makeaction" data-sitekey="6Lda_3kUAAAAAKahhF8FYVByhPDcBLxpVinajVTR"></div>
-					</div>
-					<div class="col-md-3"></div>
-				</div>
-				<div class="row">
-					<div class="col-md-3"></div>
-					<div class="col-md-6 col-xs-12">
-						<button disabled id="btn_submit" type="submit" class="btn btn-success">ยืนยันการแจ้งปัญหา</button>
+						<button type="submit" class="btn btn-success">ยืนยันการแจ้งปัญหา</button>
 					</div>
 					<div class="col-md-3"></div>
 				</div>
@@ -106,11 +103,6 @@
 		<div class="col-md-3"></div>
 	</div>
 </div>
-<script src='https://www.google.com/recaptcha/api.js?hl=th'></script>
-<script>
-function makeaction(){
-      document.getElementById('btn_submit').disabled = false;  
-}
-</script>
+
 </body>
 </html>
