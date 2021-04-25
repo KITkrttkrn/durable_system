@@ -93,7 +93,7 @@ $sql = "SELECT durable_id,
 					<div class="col-md-3"></div>
 					<div class="col-md-6 col-xs-12">
 						<button class="g-recaptcha btn btn-success" 
-								data-sitekey="reCAPTCHA_site_key" 
+								data-sitekey="6Lda_3kUAAAAAKahhF8FYVByhPDcBLxpVinajVTR" 
 								data-callback='onSubmit' 
 								data-action='submit'>ยืนยันการแจ้งปัญหา</button>
 						<!-- <button type="submit" id="btn-submit" class="btn btn-success">ยืนยันการแจ้งปัญหา</button> -->
