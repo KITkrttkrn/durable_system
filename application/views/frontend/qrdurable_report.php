@@ -44,7 +44,7 @@ $sql = "SELECT durable_id,
 			    </div>
 			</div>
 			<div class="panel-body text-left">
-				<form action="<?php echo site_url('durable_detail/process_report/'); ?>" method="post">
+				<form id="report-form" action="<?php echo site_url('durable_detail/process_report/'); ?>" method="post">
 					<div class="row">
 				    	<div class="col-md-12">
 				    		  <div class="form-group">
@@ -92,7 +92,11 @@ $sql = "SELECT durable_id,
 				<div class="row">
 					<div class="col-md-3"></div>
 					<div class="col-md-6 col-xs-12">
-						<button type="submit" class="btn btn-success">ยืนยันการแจ้งปัญหา</button>
+						<button class="g-recaptcha btn btn-success" 
+								data-sitekey="reCAPTCHA_site_key" 
+								data-callback='onSubmit' 
+								data-action='submit'>ยืนยันการแจ้งปัญหา</button>
+						<!-- <button type="submit" id="btn-submit" class="btn btn-success">ยืนยันการแจ้งปัญหา</button> -->
 					</div>
 					<div class="col-md-3"></div>
 				</div>
@@ -105,4 +109,10 @@ $sql = "SELECT durable_id,
 </div>
 
 </body>
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script>
+   function onSubmit(token) {
+     document.getElementById("report-form").submit();
+   }
+ </script>
 </html>
